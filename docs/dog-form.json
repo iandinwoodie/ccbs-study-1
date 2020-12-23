@@ -1,0 +1,1734 @@
+{
+  "id": "sSZMqb",
+  "title": "Early Development Influences Questionnaire (Part 2)",
+  "theme": {
+    "href": "https://api.typeform.com/themes/az2vZn"
+  },
+  "workspace": {
+    "href": "https://api.typeform.com/workspaces/9M4eRb"
+  },
+  "settings": {
+    "is_public": true,
+    "is_trial": false,
+    "language": "en",
+    "progress_bar": "percentage",
+    "show_progress_bar": true,
+    "show_typeform_branding": false,
+    "meta": {
+      "allow_indexing": false,
+      "description": "Brought to you by the Center for Canine Behavior Studies, a nonprofit 501(3)(c) organization."
+    }
+  },
+  "thankyou_screens": [
+    {
+      "ref": "thank-you-end",
+      "title": "Thank you for participating!",
+      "properties": {
+        "show_button": false,
+        "share_icons": false,
+        "button_mode": "reload",
+        "button_text": "again"
+      }
+    },
+    {
+      "ref": "thank-you-continue",
+      "title": "Your submission for {{field:dog-name}} has been saved!",
+      "properties": {
+        "show_button": true,
+        "share_icons": false,
+        "button_mode": "redirect",
+        "button_text": "Continue",
+        "redirect_url": "https://behaviorstudies.typeform.com/to/sSZMqb?id={{hidden:id}}&msg=We%20have%20submissions%20for%3A&list={{hidden:list}}{{hidden:sep}}{{field:dog-name}}&sep=%2C%20"
+      }
+    },
+    {
+      "ref": "default_tys",
+      "title": "Done! Your information was sent perfectly.",
+      "properties": {
+        "show_button": false,
+        "share_icons": false
+      }
+    }
+  ],
+  "fields": [
+    {
+      "id": "oSBfkiPtCaOO",
+      "title": "What is the name of the dog you would like to submit a response for?",
+      "ref": "dog-name",
+      "properties": {
+        "description": "{{hidden:msg}}{{hidden:list}}"
+      },
+      "validations": {
+        "required": true
+      },
+      "type": "short_text"
+    },
+    {
+      "id": "ppERyLAgyk3x",
+      "title": "Okay, let's talk about {{field:dog-name}}",
+      "ref": "dog-heading",
+      "properties": {
+        "show_button": true,
+        "button_text": "Continue",
+        "fields": [
+          {
+            "id": "fyNHxZ6fMiO3",
+            "title": "Was {{field:dog-name}} acquired at 12 weeks or younger?",
+            "ref": "dog-acquired-min-twelve-wks",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": false,
+              "allow_other_choice": false,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "W1LQEn0DXXUy",
+                  "ref": "60a7157b-59c3-4f01-b331-ea0ec6bd94c9",
+                  "label": "Yes"
+                },
+                {
+                  "id": "FWVeN98iiPmk",
+                  "ref": "af7a2de5-0a1c-4eff-989d-082578f1dcdc",
+                  "label": "No"
+                },
+                {
+                  "id": "XnbVwQH6D6m9",
+                  "ref": "a17bf308-79be-4b82-b51f-d1e81266f572",
+                  "label": "I don't know"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "vDCH6ZLgxXPo",
+            "title": "Is {{field:dog-name}} currently at least 1 year old?",
+            "ref": "dog-age-min-one-yr",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": false,
+              "allow_other_choice": false,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "ouFgIRN4OSOc",
+                  "ref": "5fce3b5e-7527-40ac-aeaa-6d4af2b20981",
+                  "label": "Yes"
+                },
+                {
+                  "id": "bN8ZZk5iy2Ab",
+                  "ref": "5497f82f-9a2e-4630-9f97-4e6be385f315",
+                  "label": "No"
+                },
+                {
+                  "id": "ySWYbmfXuVJP",
+                  "ref": "efb6e6c3-f044-480e-b902-f88dbe8d1440",
+                  "label": "I don't know"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "dnbEcq6N8SvO",
+            "title": "How many years old is {{field:dog-name}}?",
+            "ref": "dog-age",
+            "validations": {
+              "required": true
+            },
+            "type": "number"
+          },
+          {
+            "id": "YOuTMZipGPHF",
+            "title": "What sex is {{field:dog-name}}?",
+            "ref": "dog-sex",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": false,
+              "allow_other_choice": false,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "KZCoV2S4IrE5",
+                  "ref": "29f51565-d407-4500-b123-08c917e57ff4",
+                  "label": "Male"
+                },
+                {
+                  "id": "h9ZLWKMCMcAb",
+                  "ref": "26a6900d-705b-4e1c-b91f-295c5cb28467",
+                  "label": "Female"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "cpWGpGd1VZp5",
+            "title": "Is {{field:dog-name}} spayed or neutered?",
+            "ref": "dog-neutered",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": false,
+              "allow_other_choice": false,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "PrxIUjhkH0im",
+                  "ref": "4f43da7a-c459-4080-b057-97f67b17753b",
+                  "label": "Yes"
+                },
+                {
+                  "id": "N0psZUBgxooD",
+                  "ref": "284c280c-8274-421c-bb4d-d57514539607",
+                  "label": "No"
+                },
+                {
+                  "id": "iCyuO92TNndP",
+                  "ref": "caef5748-4ad4-4a7f-aafe-a68cc2d295ce",
+                  "label": "I don't know"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "o9X8RNk1eQEX",
+            "title": "Did you take {{field:dog-name}} for puppy training when he/she was 6 months old or younger?",
+            "ref": "dog-had-puppy-training",
+            "validations": {
+              "required": true
+            },
+            "type": "yes_no"
+          },
+          {
+            "id": "i9O4pf9jSdmW",
+            "title": "At what age(s) did you take {{field:dog-name}} for training?",
+            "ref": "dog-puppy-training-age",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": true,
+              "allow_other_choice": false,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "mcpj9gNBiEl5",
+                  "ref": "7e150695-427f-45e9-8df3-47c07b6e4663",
+                  "label": "3 months or younger"
+                },
+                {
+                  "id": "mpxNE6KnO74A",
+                  "ref": "c1e9f010-7b90-4cfb-b173-190fd39928b9",
+                  "label": "4 months"
+                },
+                {
+                  "id": "R70QTYnxQyfJ",
+                  "ref": "06b34a46-566b-4ef9-b3be-f2c41e17a329",
+                  "label": "5-6 months"
+                },
+                {
+                  "id": "Qr1fa47CQuAs",
+                  "ref": "23a7381c-0c3b-4306-9aa3-9bed5e3b0568",
+                  "label": "I don't know"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "F8cFwlj7h665",
+            "title": "How many classes did you and {{field:dog-name}} attend?",
+            "ref": "dog-num-puppy-training-classes",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": false,
+              "allow_other_choice": false,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "sS9eQf9ZMCg5",
+                  "ref": "152ce3cb-61ae-4ac4-a8c8-e44e0570c5d6",
+                  "label": "1-3 classes"
+                },
+                {
+                  "id": "q9ZPLRsYut2z",
+                  "ref": "a61ec85c-1ee9-4ae5-9c13-547b49f2f76e",
+                  "label": "4-6 classes"
+                },
+                {
+                  "id": "mQF1TqnnAIAw",
+                  "ref": "c39eb90a-9a89-4447-9e5a-ba2fb5a5615d",
+                  "label": "7-9 classes"
+                },
+                {
+                  "id": "PV99KBMmbeO0",
+                  "ref": "bb391917-b5a2-4d5a-8f84-53cd4f18faef",
+                  "label": "10+ classes"
+                },
+                {
+                  "id": "se9q50hkupwX",
+                  "ref": "5adca397-2dfa-4247-ad37-0078503d8873",
+                  "label": "I don't know"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "BYirzu2QSlF0",
+            "title": "At puppy training classes, what training techniques were used?",
+            "ref": "dog-puppy-training-techniques",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": false,
+              "allow_other_choice": false,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "n8R5SiI7GlT6",
+                  "ref": "1ab00a0a-3a3e-4614-a532-dae62a94f56a",
+                  "label": "Rewarding techniques (e.g., treats, praise, pets)"
+                },
+                {
+                  "id": "DcfHd4Af9dcj",
+                  "ref": "00c702fb-0b34-4725-8512-86179aa131ef",
+                  "label": "Tough love techniques (e.g., yelling, bopping on the nose, swatting on the rump, alpha rolls (pinning on back until dog submits), use of aversive collars (e.g., shock, prong, choke), jerking on the leash, water spraying, scruffing)"
+                },
+                {
+                  "id": "rhnEoLdHusLm",
+                  "ref": "e144dcf4-ee10-4d73-8741-1c401c62d4cf",
+                  "label": "A combination of rewarding and tough love techniques"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "RphyILXOqSWx",
+            "title": "What restraining/training devices were employed?",
+            "ref": "dog-puppy-training-devices",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": true,
+              "allow_other_choice": true,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "iWkIOmzALG66",
+                  "ref": "f6aa80cc-4e76-4b57-843b-aada57e402c2",
+                  "label": "Nylon slip collar"
+                },
+                {
+                  "id": "I1nLGKCNxNwH",
+                  "ref": "513523ae-d0a8-4619-8f89-0d37727ebbca",
+                  "label": "Buckle collar"
+                },
+                {
+                  "id": "bK1YWADGviTg",
+                  "ref": "f966be66-23d7-4568-9851-6887c59b894c",
+                  "label": "Head halter (with nose band)"
+                },
+                {
+                  "id": "Eol4ZzfArGD3",
+                  "ref": "f7077120-cd4c-49d3-a3ca-0ce4173e481b",
+                  "label": "Harness (around chest)"
+                },
+                {
+                  "id": "hGjCg9sL6qvX",
+                  "ref": "fa390b80-fe8e-4dad-8103-a35c641cf160",
+                  "label": "Metal \"choke\" collar"
+                },
+                {
+                  "id": "Hg48nSqstXv4",
+                  "ref": "ff94761d-172e-445f-b583-4994d8aa6e7c",
+                  "label": "Prong collar"
+                },
+                {
+                  "id": "nqfktqATOfG1",
+                  "ref": "373046e3-5d01-4a48-b0d8-31088538bc05",
+                  "label": "Martingale collar"
+                },
+                {
+                  "id": "ViubIppEkz7a",
+                  "ref": "09ea7ef4-9bbe-47b3-8f2a-363f2fddbabe",
+                  "label": "Electric shock collar"
+                },
+                {
+                  "id": "A0IO3BYWKwzv",
+                  "ref": "dea4c51c-c974-46e4-aca7-2ace834b1109",
+                  "label": "No devices were employed"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "GUbfHR5bA7Xt",
+            "title": "Is there at least one situation in which you {{field:dog-name}} behaves aggressively?",
+            "ref": "dog-has-aggression",
+            "validations": {
+              "required": true
+            },
+            "type": "yes_no"
+          },
+          {
+            "id": "HezoBEjuXjdE",
+            "title": "Who or what has {{field:dog-name}} acted aggressively toward?",
+            "ref": "dog-aggression-type",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": true,
+              "allow_other_choice": true,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "BHsWiqN7YunL",
+                  "ref": "eb92bda3-67d8-4b35-aadc-2da64666fed9",
+                  "label": "Familiar people in the home"
+                },
+                {
+                  "id": "wuNonwhQusef",
+                  "ref": "62cd306a-1b80-4f89-98b7-5f14784cf334",
+                  "label": "Familiar people away from the home"
+                },
+                {
+                  "id": "bgsTpP7muPRb",
+                  "ref": "fdef5ab0-4364-4c6b-8009-9dc747faa93b",
+                  "label": "Strangers visiting the home"
+                },
+                {
+                  "id": "fOxI27JkC84u",
+                  "ref": "71d84d6e-9f43-48e0-937f-1796795d67df",
+                  "label": "Strangers away from the home"
+                },
+                {
+                  "id": "Ehld1o5Dgnzm",
+                  "ref": "38796ad9-a527-4723-964a-e3a177e50ba7",
+                  "label": "Familiar dogs in the home"
+                },
+                {
+                  "id": "g61EGZFxf9vh",
+                  "ref": "95210555-ae90-4bc8-a864-1877453b2b56",
+                  "label": "Familiar dogs away from the home"
+                },
+                {
+                  "id": "OnZTha4SWoPI",
+                  "ref": "d3fd08ce-4dbc-4c60-8130-cc96a425e3af",
+                  "label": "Unfamiliar dogs in the home"
+                },
+                {
+                  "id": "zPFInHzFmnbW",
+                  "ref": "d147f326-1d35-4d9c-a047-19c997f480b4",
+                  "label": "Unfamiliar dogs away from the home"
+                },
+                {
+                  "id": "ZdjMCZKZAqe5",
+                  "ref": "75e88819-671b-4dc7-8101-98e70511a232",
+                  "label": "Animals other than dogs"
+                },
+                {
+                  "id": "iZQGv5X6HRRu",
+                  "ref": "0acd9278-f380-4e60-9f76-9657807f685d",
+                  "label": "Veterinarians"
+                },
+                {
+                  "id": "TAPKS8L1XfJT",
+                  "ref": "35263622-74d6-4287-9c51-11700c770c29",
+                  "label": "Groomers"
+                },
+                {
+                  "id": "rDUsf7qd7SMe",
+                  "ref": "0ec7cb36-417c-43e5-ae68-a37a9bd3590a",
+                  "label": "Trainers"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "FEw8VAMezKAL",
+            "title": "Is there at least one situation in which {{field:dog-name}} is fearful or anxious?",
+            "ref": "dog-has-fear-anxiety",
+            "validations": {
+              "required": true
+            },
+            "type": "yes_no"
+          },
+          {
+            "id": "H6u9kG0Fah0p",
+            "title": "What sort of fears and/or anxiety has {{field:dog-name}} had?",
+            "ref": "dog-fear-anxiety-type",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": true,
+              "allow_other_choice": true,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "Zl4jx2fO5whk",
+                  "ref": "02ca820a-536e-45de-8b57-9aaa8ad986d5",
+                  "label": "Fear of crowds"
+                },
+                {
+                  "id": "knFkQtInLMj9",
+                  "ref": "55e9dc4a-5875-44ca-9d8b-47ea660aaf6c",
+                  "label": "Fear of veterinary visits"
+                },
+                {
+                  "id": "c5krVL1EgAnZ",
+                  "ref": "90c401a4-e94e-4770-8ae1-ff02c0345a1f",
+                  "label": "Fear of noises"
+                },
+                {
+                  "id": "hjg034Tzpp6E",
+                  "ref": "3e31c718-48ea-461f-af13-f5c6e65b6e81",
+                  "label": "Fear of thunderstorms"
+                },
+                {
+                  "id": "HE7Rvy5ercUt",
+                  "ref": "76fcae64-1b53-4c9b-a29f-979932dfa6a9",
+                  "label": "Fear of other dogs"
+                },
+                {
+                  "id": "QGY01jDhVauR",
+                  "ref": "89dc3870-ef7e-42d7-83ee-1734692f3c1f",
+                  "label": "Fear of animals other than dogs"
+                },
+                {
+                  "id": "Xsn5SukuiA1r",
+                  "ref": "4c706dd3-81ec-4840-9350-abda665af6ef",
+                  "label": "Separation anxiety"
+                },
+                {
+                  "id": "GJvRF9rOnznx",
+                  "ref": "6e85d003-7738-4e19-bcd1-e07217ca3edc",
+                  "label": "Travel anxiety"
+                },
+                {
+                  "id": "XHCFKsZ1UXpy",
+                  "ref": "e467d23b-8487-4d96-976d-2f9e88e8eee3",
+                  "label": "Generalized anxiety"
+                },
+                {
+                  "id": "OgFfI4ljgbHd",
+                  "ref": "983eed4e-67f2-4ddf-ac09-7cbbe22cecb9",
+                  "label": "Post-traumatic Stress Disorder (PTSD)"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "HLTzz4WXfj7q",
+            "title": "Do you consider {{field:dog-name}} to have a problem with jumping up on people?",
+            "ref": "dog-has-problematic-jumping",
+            "validations": {
+              "required": true
+            },
+            "type": "yes_no"
+          },
+          {
+            "id": "IbGf7Bk4IHIr",
+            "title": "Who does {{field:dog-name}} jumped up on?",
+            "ref": "dog-problematic-jumping-type",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": true,
+              "allow_other_choice": true,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "DCACys3mfJGM",
+                  "ref": "ee72c9a7-88ee-4860-8c2b-7bc092d64069",
+                  "label": "Owners"
+                },
+                {
+                  "id": "qZ9OXQZ4gUfq",
+                  "ref": "e5810128-b2dc-4bca-88aa-03c5b8fd9873",
+                  "label": "Familiar people"
+                },
+                {
+                  "id": "G1kxMQ7XVajd",
+                  "ref": "62a943fe-8847-4554-ac8a-6a540c437e8d",
+                  "label": "Stangers"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "Bl46BqWJ1gVb",
+            "title": "Does {{field:dog-name}} bark excessively?",
+            "ref": "dog-has-excessive-barking",
+            "validations": {
+              "required": true
+            },
+            "type": "yes_no"
+          },
+          {
+            "id": "E6TKROE8pPrn",
+            "title": "When has {{field:dog-name}} excessively barked?",
+            "ref": "dog-excessive-barking-type",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": true,
+              "allow_other_choice": true,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "hI3Nmy5OIU0M",
+                  "ref": "66932384-815d-490a-a92b-19a868b9620f",
+                  "label": "At triggers (inside)"
+                },
+                {
+                  "id": "t4jw13Y2ZXeu",
+                  "ref": "9480bdcb-bfef-450a-a472-69e569471536",
+                  "label": "At triggers (outside)"
+                },
+                {
+                  "id": "S002KsAXQLiD",
+                  "ref": "0a0280d9-0eca-4794-8c9b-17b3575f2fb9",
+                  "label": "Owners are present"
+                },
+                {
+                  "id": "anwXcbX2Rzto",
+                  "ref": "d1ba20ce-4866-4b5e-bb94-edac4e050089",
+                  "label": "Owners are away"
+                },
+                {
+                  "id": "YPCmz6zbxoo9",
+                  "ref": "00b283b9-742a-4085-99a9-b6d07431a5ea",
+                  "label": "To get attention"
+                },
+                {
+                  "id": "e6rM1lUDKaU9",
+                  "ref": "c5c44c6b-da67-4b09-8a47-a2e1815901cf",
+                  "label": "During car rides"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "ZesOREC0n3LT",
+            "title": "Has {{field:dog-name}} ever eaten feces?",
+            "ref": "dog-has-coprophagia",
+            "validations": {
+              "required": true
+            },
+            "type": "yes_no"
+          },
+          {
+            "id": "vesMPOoAtN6k",
+            "title": "What type of feces has {{field:dog-name}} eaten?",
+            "ref": "dog-coprophagia-type",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": true,
+              "allow_other_choice": true,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "rPlplI1pw9FW",
+                  "ref": "0c77ca06-bb7d-439e-861d-2aea172d9840",
+                  "label": "Their own feces"
+                },
+                {
+                  "id": "MAkINHnzW0f0",
+                  "ref": "db768247-a5c4-4275-a514-5edfc256dd4e",
+                  "label": "Dog feces other than their own"
+                },
+                {
+                  "id": "EBrzdZDJ7tF6",
+                  "ref": "82b4ecc5-7866-4f86-8d5b-acda9d298c5e",
+                  "label": "The feces of other animals"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "qjAYzPSUhDZy",
+            "title": "Has {{field:dog-name}} ever had any repetitive behaviors?",
+            "ref": "dog-has-compulsion",
+            "validations": {
+              "required": true
+            },
+            "type": "yes_no"
+          },
+          {
+            "id": "g5u8WfFKrTny",
+            "title": "What sort of repetitive behaviors have you seen with {{field:dog-name}}?",
+            "ref": "dog-compulsion-type",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": true,
+              "allow_other_choice": true,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "FR5ZAYEfJqeP",
+                  "ref": "fdcb4db6-545a-44d2-b986-64bca9d4f98f",
+                  "label": "Licking of the wrist/hock"
+                },
+                {
+                  "id": "mjp4axu9zZN2",
+                  "ref": "7a8f22b1-c87b-452b-a603-0cf2076b2094",
+                  "label": "Tail chasing"
+                },
+                {
+                  "id": "W2jU7D54MU0F",
+                  "ref": "2fbc1db9-c159-49a8-999f-2ec6b34ea4dc",
+                  "label": "Digging in the yard"
+                },
+                {
+                  "id": "TmSsrYOUxIhk",
+                  "ref": "42d5d8b3-1a0c-4449-b2e4-9117b4013e58",
+                  "label": "Tennis ball fetish"
+                },
+                {
+                  "id": "sju54rgJa0D8",
+                  "ref": "be285c73-d398-4e9e-a53c-a982dc2c761a",
+                  "label": "Spinning"
+                },
+                {
+                  "id": "BzLL0guWapcB",
+                  "ref": "f755e924-fbb2-4841-8b80-8168ae311236",
+                  "label": "Nail biting"
+                },
+                {
+                  "id": "C43hz0hezTcd",
+                  "ref": "169c22ad-d7f5-41f0-ab1c-7d41c61765b0",
+                  "label": "Shadow/light chasing"
+                },
+                {
+                  "id": "i7NdmWwYE0sB",
+                  "ref": "b925d91d-f004-42f5-b7af-708041440247",
+                  "label": "Sucking flank regions/blankets"
+                },
+                {
+                  "id": "rQfrZLzf2lyK",
+                  "ref": "122d99c0-e02e-48a5-9748-88e316d5092e",
+                  "label": "Running in geometric patterns"
+                },
+                {
+                  "id": "CXwgIIaBTGp8",
+                  "ref": "0b32abc1-180f-4cff-9ba0-d0c1710d8156",
+                  "label": "Collecting/arranging objects"
+                },
+                {
+                  "id": "IHGMEEp9crNa",
+                  "ref": "19149d8a-4458-46ce-b7ff-bb9f13e2ba52",
+                  "label": "Stone/rock chewing"
+                },
+                {
+                  "id": "NSdJmCflF4np",
+                  "ref": "1e45537b-28b2-4a35-9179-4c2e6156a7c7",
+                  "label": "Fly snapping (when no flies are around)"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "lHfyVir0GVtq",
+            "title": "Have you ever had a problem with {{field:dog-name}} soiling in the house?",
+            "ref": "dog-has-house-soiling",
+            "validations": {
+              "required": true
+            },
+            "type": "yes_no"
+          },
+          {
+            "id": "dSTUutDLehBJ",
+            "title": "When has {{field:dog-name}} soiled in the house?",
+            "ref": "dog-house-soiling-when",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": true,
+              "allow_other_choice": true,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "h53VWb0txWH1",
+                  "ref": "8c7828fb-4b03-4cfe-859a-e868df5ac832",
+                  "label": "Owners are present"
+                },
+                {
+                  "id": "e1yQubTVPTqG",
+                  "ref": "8f2eec7b-0896-4bed-b933-ddba0bc5945a",
+                  "label": "Owners are away"
+                },
+                {
+                  "id": "toKHRGi81RCi",
+                  "ref": "0d7d3ce0-e0bf-4dc7-9694-86ab6e36f3ac",
+                  "label": "Exited/overwhelmed"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "dLTibWQUsGki",
+            "title": "How has {{field:dog-name}} soiled in the house?",
+            "ref": "dog-house-soiling-type",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": true,
+              "allow_other_choice": true,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "f6IYttYavadf",
+                  "ref": "810543fe-6ee7-4900-8862-512b15084f90",
+                  "label": "Feces"
+                },
+                {
+                  "id": "WrRR71odLnCX",
+                  "ref": "ac6a4b92-77ef-4992-b449-e9c39b80bff1",
+                  "label": "Urine"
+                },
+                {
+                  "id": "W0y48vqHvTMm",
+                  "ref": "fe754b5b-e3ed-40c5-95ec-ef5c6d53172a",
+                  "label": "Both feces and urine"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "YZ2DtMgKmiYM",
+            "title": "Where has {{field:dog-name}} soiled in the house?",
+            "ref": "dog-house-soiling-where",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": true,
+              "allow_other_choice": true,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "nOnb428FwAZW",
+                  "ref": "2c69c9fd-8d9d-4954-a9b3-6ae807a23c23",
+                  "label": "Specific locations"
+                },
+                {
+                  "id": "zgdwO623Bvdw",
+                  "ref": "b9cc90c7-df46-4150-a14a-0ee0c3ecbc11",
+                  "label": "Anywhere"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "VCSLGBotBD2X",
+            "title": "Has {{field:dog-name}} ever rolled in repulsive material?",
+            "ref": "dog-has-rolling",
+            "validations": {
+              "required": true
+            },
+            "type": "yes_no"
+          },
+          {
+            "id": "pZJuz2yAz72u",
+            "title": "In what repulsive material has {{field:dog-name}} rolled?",
+            "ref": "dog-rolling-type",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": true,
+              "allow_other_choice": true,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "nxOyk14yAXQx",
+                  "ref": "98080551-e4c8-4a5b-b174-a601a7ef0e9d",
+                  "label": "Urine"
+                },
+                {
+                  "id": "fWPQzRZOoHpp",
+                  "ref": "73ca29b9-3dea-47f0-936e-63905b516552",
+                  "label": "Feces"
+                },
+                {
+                  "id": "Xk7SaysRYI7f",
+                  "ref": "ebc77f29-7a5a-419e-aece-5c17692a5c3a",
+                  "label": "Garbage"
+                },
+                {
+                  "id": "fRa6BQzIQIln",
+                  "ref": "ec3d0be9-9cb3-45ef-9e4b-e08df4049e6e",
+                  "label": "Dead stuff"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "uijeY4blIAar",
+            "title": "Do you consider{{field:dog-name}} to be overactive/hyperactive?",
+            "ref": "dog-has-hyperactivity",
+            "validations": {
+              "required": true
+            },
+            "type": "yes_no"
+          },
+          {
+            "id": "PUXP3vMys2c2",
+            "title": "In what ways has {{field:dog-name}} been overactive/hyperactive?",
+            "ref": "dog-hyperactivity-type",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": true,
+              "allow_other_choice": true,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "FsZeGUqmAs7b",
+                  "ref": "c76dc690-699c-4a32-aa68-af23336b075c",
+                  "label": "Difficulty settling"
+                },
+                {
+                  "id": "kd2GDlo88HCz",
+                  "ref": "03f2c440-3ac7-42c5-8ee3-e037ef508937",
+                  "label": "Constant moving/jumping"
+                },
+                {
+                  "id": "jHwEtyyVqYeN",
+                  "ref": "0ca92653-852b-48bf-82ae-6e28d79306cd",
+                  "label": "Impulsiveness"
+                },
+                {
+                  "id": "tKvi5OrvIeyo",
+                  "ref": "70b4955d-2c72-419b-ac33-a4386b67d1be",
+                  "label": "Easily distracted"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "EQT26W05hDvv",
+            "title": "Has {{field:dog-name}} ever exhibited destructive behavior in the home (other than puppy chewing behavior)?",
+            "ref": "dog-has-destruction",
+            "validations": {
+              "required": true
+            },
+            "type": "yes_no"
+          },
+          {
+            "id": "jHSVNbEgIuK1",
+            "title": "When has {{field:dog-name}} been destructive?",
+            "ref": "dog-destruction-type",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": true,
+              "allow_other_choice": true,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "MQA5MXzjtTUr",
+                  "ref": "7fb3f575-dbbd-4bde-b76a-4b2a22d3e2ab",
+                  "label": "Owner is present"
+                },
+                {
+                  "id": "cNxrtgM6phAs",
+                  "ref": "ab7398da-26ca-4b7d-8310-5878776f95cc",
+                  "label": "Owner is away"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "Whw2CWhJuALc",
+            "title": "Has {{field:dog-name}} ever run away/escaped?",
+            "ref": "dog-has-escaping",
+            "validations": {
+              "required": true
+            },
+            "type": "yes_no"
+          },
+          {
+            "id": "PsakK5ngvOeb",
+            "title": "Which of the following describes how {{field:dog-name}} has run away/escaped?",
+            "ref": "dog-escaping-type",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": true,
+              "allow_other_choice": true,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "OmUJ49xAjlRK",
+                  "ref": "513517ab-a228-459a-8b71-983fa595ec73",
+                  "label": "Escapes from home"
+                },
+                {
+                  "id": "kCqHSzgDal9s",
+                  "ref": "447e9d41-05e6-407d-9af1-312df762c483",
+                  "label": "Escaped when out"
+                },
+                {
+                  "id": "oUCsuydobjNp",
+                  "ref": "1f5ef7ee-df9e-4b10-b5f4-205b2965449e",
+                  "label": "Escapes from confinement"
+                },
+                {
+                  "id": "ae1GElgfdqSA",
+                  "ref": "83cc2eea-1983-4446-bd72-3eb6e3608e64",
+                  "label": "Returns home after escape"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "GJjrcHDu7KVm",
+            "title": "Have you ever had a problem with {{field:dog-name}} mounting/humping?",
+            "ref": "dog-has-mounting",
+            "validations": {
+              "required": true
+            },
+            "type": "yes_no"
+          },
+          {
+            "id": "Olls1iY0GIYi",
+            "title": "Who or what has {{field:dog-name}} mounted/humped?",
+            "ref": "dog-mounting-type",
+            "properties": {
+              "randomize": false,
+              "allow_multiple_selection": true,
+              "allow_other_choice": true,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "XMmw7WSqYQ5q",
+                  "ref": "752f72c2-5fa2-4249-9f58-87ecc8bc5aaa",
+                  "label": "People"
+                },
+                {
+                  "id": "euXy2MTAlvy9",
+                  "ref": "9b8ddffe-0bd5-4ca2-89c1-1e1275b98bf8",
+                  "label": "Familiar dogs"
+                },
+                {
+                  "id": "s2avJ8lQUKxc",
+                  "ref": "866de33d-a8c0-4543-b598-f13306a86bed",
+                  "label": "Unfamiliar dogs"
+                },
+                {
+                  "id": "BPE3H1puhOTO",
+                  "ref": "00ce0cfe-0479-44cf-b710-90f377c8a330",
+                  "label": "Inanimate objects"
+                }
+              ]
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "multiple_choice"
+          }
+        ]
+      },
+      "type": "group"
+    },
+    {
+      "id": "Q9OBSWOmImxD",
+      "title": "Do you have another dog you would like to complete the questionnaire for?",
+      "ref": "dog-fill-out-again",
+      "validations": {
+        "required": true
+      },
+      "type": "yes_no"
+    }
+  ],
+  "hidden": [
+    "id",
+    "msg",
+    "list",
+    "sep"
+  ],
+  "logic": [
+    {
+      "type": "field",
+      "ref": "dog-age-min-one-yr",
+      "actions": [
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-age"
+            }
+          },
+          "condition": {
+            "op": "is",
+            "vars": [
+              {
+                "type": "field",
+                "value": "dog-age-min-one-yr"
+              },
+              {
+                "type": "choice",
+                "value": "5fce3b5e-7527-40ac-aeaa-6d4af2b20981"
+              }
+            ]
+          }
+        },
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-sex"
+            }
+          },
+          "condition": {
+            "op": "always",
+            "vars": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "field",
+      "ref": "dog-has-problematic-jumping",
+      "actions": [
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-problematic-jumping-type"
+            }
+          },
+          "condition": {
+            "op": "is",
+            "vars": [
+              {
+                "type": "field",
+                "value": "dog-has-problematic-jumping"
+              },
+              {
+                "type": "constant",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-has-excessive-barking"
+            }
+          },
+          "condition": {
+            "op": "always",
+            "vars": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "field",
+      "ref": "dog-has-destruction",
+      "actions": [
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-destruction-type"
+            }
+          },
+          "condition": {
+            "op": "is",
+            "vars": [
+              {
+                "type": "field",
+                "value": "dog-has-destruction"
+              },
+              {
+                "type": "constant",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-has-escaping"
+            }
+          },
+          "condition": {
+            "op": "always",
+            "vars": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "field",
+      "ref": "dog-has-coprophagia",
+      "actions": [
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-coprophagia-type"
+            }
+          },
+          "condition": {
+            "op": "is",
+            "vars": [
+              {
+                "type": "field",
+                "value": "dog-has-coprophagia"
+              },
+              {
+                "type": "constant",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-has-compulsion"
+            }
+          },
+          "condition": {
+            "op": "always",
+            "vars": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "field",
+      "ref": "dog-had-puppy-training",
+      "actions": [
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-puppy-training-age"
+            }
+          },
+          "condition": {
+            "op": "is",
+            "vars": [
+              {
+                "type": "field",
+                "value": "dog-had-puppy-training"
+              },
+              {
+                "type": "constant",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-has-aggression"
+            }
+          },
+          "condition": {
+            "op": "always",
+            "vars": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "field",
+      "ref": "dog-has-excessive-barking",
+      "actions": [
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-excessive-barking-type"
+            }
+          },
+          "condition": {
+            "op": "is",
+            "vars": [
+              {
+                "type": "field",
+                "value": "dog-has-excessive-barking"
+              },
+              {
+                "type": "constant",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-has-coprophagia"
+            }
+          },
+          "condition": {
+            "op": "always",
+            "vars": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "field",
+      "ref": "dog-has-house-soiling",
+      "actions": [
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-house-soiling-when"
+            }
+          },
+          "condition": {
+            "op": "is",
+            "vars": [
+              {
+                "type": "field",
+                "value": "dog-has-house-soiling"
+              },
+              {
+                "type": "constant",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-has-rolling"
+            }
+          },
+          "condition": {
+            "op": "always",
+            "vars": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "field",
+      "ref": "dog-has-hyperactivity",
+      "actions": [
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-hyperactivity-type"
+            }
+          },
+          "condition": {
+            "op": "is",
+            "vars": [
+              {
+                "type": "field",
+                "value": "dog-has-hyperactivity"
+              },
+              {
+                "type": "constant",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-has-destruction"
+            }
+          },
+          "condition": {
+            "op": "always",
+            "vars": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "field",
+      "ref": "dog-has-rolling",
+      "actions": [
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-rolling-type"
+            }
+          },
+          "condition": {
+            "op": "is",
+            "vars": [
+              {
+                "type": "field",
+                "value": "dog-has-rolling"
+              },
+              {
+                "type": "constant",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-has-hyperactivity"
+            }
+          },
+          "condition": {
+            "op": "always",
+            "vars": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "field",
+      "ref": "dog-has-aggression",
+      "actions": [
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-aggression-type"
+            }
+          },
+          "condition": {
+            "op": "is",
+            "vars": [
+              {
+                "type": "field",
+                "value": "dog-has-aggression"
+              },
+              {
+                "type": "constant",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-has-fear-anxiety"
+            }
+          },
+          "condition": {
+            "op": "always",
+            "vars": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "field",
+      "ref": "dog-has-escaping",
+      "actions": [
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-escaping-type"
+            }
+          },
+          "condition": {
+            "op": "is",
+            "vars": [
+              {
+                "type": "field",
+                "value": "dog-has-escaping"
+              },
+              {
+                "type": "constant",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-has-mounting"
+            }
+          },
+          "condition": {
+            "op": "always",
+            "vars": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "field",
+      "ref": "dog-has-fear-anxiety",
+      "actions": [
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-fear-anxiety-type"
+            }
+          },
+          "condition": {
+            "op": "is",
+            "vars": [
+              {
+                "type": "field",
+                "value": "dog-has-fear-anxiety"
+              },
+              {
+                "type": "constant",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-has-problematic-jumping"
+            }
+          },
+          "condition": {
+            "op": "always",
+            "vars": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "field",
+      "ref": "dog-has-mounting",
+      "actions": [
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-mounting-type"
+            }
+          },
+          "condition": {
+            "op": "is",
+            "vars": [
+              {
+                "type": "field",
+                "value": "dog-has-mounting"
+              },
+              {
+                "type": "constant",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-fill-out-again"
+            }
+          },
+          "condition": {
+            "op": "always",
+            "vars": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "field",
+      "ref": "dog-fill-out-again",
+      "actions": [
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "thankyou",
+              "value": "thank-you-end"
+            }
+          },
+          "condition": {
+            "op": "is",
+            "vars": [
+              {
+                "type": "field",
+                "value": "dog-fill-out-again"
+              },
+              {
+                "type": "constant",
+                "value": false
+              }
+            ]
+          }
+        },
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "thankyou",
+              "value": "thank-you-continue"
+            }
+          },
+          "condition": {
+            "op": "always",
+            "vars": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "field",
+      "ref": "dog-has-compulsion",
+      "actions": [
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-compulsion-type"
+            }
+          },
+          "condition": {
+            "op": "is",
+            "vars": [
+              {
+                "type": "field",
+                "value": "dog-has-compulsion"
+              },
+              {
+                "type": "constant",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "action": "jump",
+          "details": {
+            "to": {
+              "type": "field",
+              "value": "dog-has-house-soiling"
+            }
+          },
+          "condition": {
+            "op": "always",
+            "vars": []
+          }
+        }
+      ]
+    }
+  ],
+  "_links": {
+    "display": "https://behaviorstudies.typeform.com/to/sSZMqb"
+  }
+}

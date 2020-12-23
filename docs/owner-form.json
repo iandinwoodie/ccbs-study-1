@@ -1,0 +1,125 @@
+{
+  "id": "UVE7ZT",
+  "title": "Early Development Influences Questionnaire",
+  "theme": {
+    "href": "https://api.typeform.com/themes/az2vZn"
+  },
+  "workspace": {
+    "href": "https://api.typeform.com/workspaces/9M4eRb"
+  },
+  "settings": {
+    "is_public": true,
+    "is_trial": false,
+    "language": "en",
+    "progress_bar": "percentage",
+    "show_progress_bar": false,
+    "show_typeform_branding": false,
+    "meta": {
+      "allow_indexing": false,
+      "description": "Brought to you by the Center for Canine Behavior Studies, a nonprofit 501(3)(c) organization."
+    },
+    "redirect_after_submit_url": "https://behaviorstudies.typeform.com/to/sSZMqb?id={{field:owner-email}}&msg=%00&list=%00&sep=%20"
+  },
+  "welcome_screens": [
+    {
+      "ref": "c71f25f7-79b1-4a73-87dc-d8e550124372",
+      "title": "Welcome to the Early Development Influences Questionnaire",
+      "properties": {
+        "show_button": true,
+        "description": "Center for Canine Behavior Studies\nA nonprofit 501(3)(c) organization",
+        "button_text": "Start"
+      }
+    }
+  ],
+  "thankyou_screens": [
+    {
+      "ref": "default_tys",
+      "title": "Done! Your information was sent perfectly.",
+      "properties": {
+        "show_button": false,
+        "share_icons": false
+      }
+    }
+  ],
+  "fields": [
+    {
+      "id": "IwepaoJK8Pqt",
+      "title": "First let's get some information about you",
+      "ref": "owner-heading",
+      "properties": {
+        "show_button": true,
+        "button_text": "Continue",
+        "fields": [
+          {
+            "id": "nKq2KzhSVTw2",
+            "title": "What is your email?",
+            "ref": "owner-email",
+            "properties": {
+              "description": "We use emails to differentiate you from other dog owners."
+            },
+            "validations": {
+              "required": true
+            },
+            "type": "email"
+          },
+          {
+            "id": "ZDij2CUaY6mh",
+            "title": "What is your postal code?",
+            "ref": "owner-postal-code",
+            "properties": {
+              "description": "We collect postal codes so that we may determine if our results apply regionally or globally."
+            },
+            "validations": {
+              "required": false
+            },
+            "type": "short_text"
+          },
+          {
+            "id": "Sn6NJwUtlyNx",
+            "title": "What is your gender?",
+            "ref": "owner-gender",
+            "properties": {
+              "description": "We collect dog owner gender so that we may detect its role in the trends we discover.",
+              "randomize": false,
+              "allow_multiple_selection": false,
+              "allow_other_choice": false,
+              "vertical_alignment": true,
+              "choices": [
+                {
+                  "id": "LxMm9ZpAdZbb",
+                  "ref": "575f2f25-4035-4418-b744-fca2846fdbf0",
+                  "label": "Male"
+                },
+                {
+                  "id": "R1JcFtXr9lGO",
+                  "ref": "c9f8607e-400b-40fd-88c9-b8ae62d6d951",
+                  "label": "Female"
+                }
+              ]
+            },
+            "validations": {
+              "required": false
+            },
+            "type": "multiple_choice"
+          },
+          {
+            "id": "TpywnArd4myB",
+            "title": "What is your age?",
+            "ref": "owner-age",
+            "properties": {
+              "description": "We collect dog owner age so that we can determine if it plays a role in the canine behaviors we are studying."
+            },
+            "validations": {
+              "required": false
+            },
+            "type": "number"
+          }
+        ]
+      },
+      "type": "group"
+    }
+  ],
+  "_links": {
+    "display": "https://behaviorstudies.typeform.com/to/UVE7ZT"
+  }
+}
