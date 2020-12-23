@@ -58,3 +58,9 @@ str(df)
 
 We don't want to interpret every column as characters (`chr`), let's start by
 specifying the continuous variables.
+
+```{r}
+df$age_yrs <- as.integer(df$age_yrs)
+summary(df$age_yrs)
+```
+
