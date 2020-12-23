@@ -56,6 +56,10 @@ colnames(df) <- names
 str(df)
 ```
 
+# Specifying Data Types
+
+## Continious
+
 We don't want to interpret every column as characters (`chr`), let's start by
 specifying the continuous variables.
 
@@ -64,3 +68,61 @@ df$age_yrs <- as.integer(df$age_yrs)
 summary(df$age_yrs)
 ```
 
+## Discrete
+
+### Factors
+
+We convert a bulk of the columns to factors.
+
+```{r}
+factors <- c(
+  'acq_12_wo_or_less',
+  'at_least_1yo',
+  'sex',
+  'neutered',
+  'train_age',
+  'train_class_count',
+  'train_technique',
+  'restr_device',
+  'aggression',
+  'fear_anxiety',
+  'jumping',
+  'barking',
+  'coprophagia',
+  'compulsion',
+  'soil_when',
+  'soil_how',
+  'soil_where',
+  'rep_materials',
+  'hyperactive',
+  'destructive',
+  'escape',
+  'mounting',
+  'owner_id'
+)
+
+for (c in factors) {
+  df[, c] <- as.factor(df[, c])
+}
+
+str(df[, factors])
+```
+
+We need to drop the responses for dogs with owners that can't remember when they
+were acquired.
+
+```{r}
+df <- df[!(df$acq_12_wo_or_less=="I don't know"),]
+
+str(df)
+```
+
+### Boolean
+
+It's clear that some factor columns can be converted to boolean (i.e., logical).
+
+```{r}
+bools <- c(
+  'neutered'
+)
+```
