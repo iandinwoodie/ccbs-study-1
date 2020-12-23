@@ -126,7 +126,13 @@ We derive some columns for ease of use and improved clarity.
 ```{r}
 ```
 
+# Dropping Columns
 
+Drop columns that serve no purpose with the analysis.
+
+```{r}
+df <- subset(df, select=-c(take_again))
+```
 
 # Saving the Tidy Data
 
