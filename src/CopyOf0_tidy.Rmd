@@ -1,0 +1,668 @@
+---
+title: "Tidying the Data"
+subtitle: "An Investigation into the Impact of Pre-adolescent Training on Canine Behavior"
+author: "Ian Dinwoodie"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(plyr)
+library(ggplot2)
+library(ggpubr)
+knitr::opts_chunk$set(echo=TRUE)
+```
+
+## Loading the Data
+
+We load our data, rename the columns, and examine the structure.
+
+```{r}
+# Load the data from the csv into a data frame.
+df <- read.csv("data/dogs.csv", header=TRUE, skipNul=TRUE)
+dim(df)
+
+# Rename the columns for accessibility.
+names <- c(
+  'acq_12_wo_or_less',
+  'at_least_1yo',
+  'age_yrs',
+  'sex',
+  'neutered',
+  'train_6mo_or_less',
+  'train_age',
+  'train_class_count',
+  'train_technique',
+  'restr_device',
+  'aggression',
+  'fear_anxiety',
+  'jumping',
+  'barking',
+  'coprophagia',
+  'compulsion',
+  'soil_when',
+  'soil_how',
+  'soil_where',
+  'rep_materials',
+  'hyperactive',
+  'destructive',
+  'escape',
+  'mounting',
+  'take_again',
+  'owner_id'
+)
+colnames(df) <- names
+
+# Peek at the structure of the data.
+str(df)
+```
+
+We see that there are 1095 dogs (1 result = 1 dog) in the study. Let's get a
+count of the number of participating dog owners.
+
+```{r}
+length(unique(df$owner_id))
+```
+
+## Applying Inclusion Criteria
+
+Next, we apply our inclusion criteria to drop any unnecessary columns. We have
+two criteria: (1) the dog must not be younger than 1 year old and (2) the dog
+must be a reasonable age (i.e., 35 years or younger).
+
+```{r}
+# Apply the inclusion criteria.
+df$keep <- FALSE
+df$keep[(df$age_yrs >= 1 & df$age_yrs < 35)] <- TRUE
+df <- df[df$keep == TRUE, ]
+
+# Drop the columns that are no longer needed.
+df <- df[, !(colnames(df) %in% c('keep', 'at_least_1yo'))]
+dim(df)
+```
+
+Now we calculate the number of dog owners that remain after the inclusion
+criteria.
+
+```{r}
+length(unique(df$owner_id))
+```
+
+## Tidying Data
+
+We tidy up the remaining data after applying our inclusion criteria.
+
+```{r}
+df$owner_id <- as.factor(df$owner_id)
+
+# Clean up boolean responses (some of which may include "idk" responses).
+df$acq_12_wo_or_less <- as.factor(df$acq_12_wo_or_less)
+df$neutered <- ifelse(df$neutered== "Yes", TRUE, FALSE)
+
+# Convert sex column to maleness column.
+df$male <- ifelse(df$sex == "Male", TRUE, FALSE)
+df <- subset(df, select=-c(sex))
+
+# Convert behavior problems to boolean.
+df$aggression <- ifelse(df$aggression == "", FALSE, TRUE)
+df$fear_anxiety <- ifelse(df$fear_anxiety == "", FALSE, TRUE)
+df$jumping <- ifelse(df$jumping == "", FALSE, TRUE)
+df$barking <- ifelse(df$barking == "", FALSE, TRUE)
+df$coprophagia <- ifelse(df$coprophagia == "", FALSE, TRUE)
+df$compulsion <- ifelse(df$compulsion == "", FALSE, TRUE)
+df$soil <- ifelse(
+  df$soil_when == "" & df$soil_how == "" & df$soil_where == "", FALSE, TRUE)
+df <- subset(df, select=-c(soil_when, soil_how, soil_where))
+df$rep_materials <- ifelse(df$rep_materials == "", FALSE, TRUE)
+df$hyperactive <- ifelse(df$hyperactive == "", FALSE, TRUE)
+df$destructive <- ifelse(df$destructive == "", FALSE, TRUE)
+df$escape <- ifelse(df$escape == "", FALSE, TRUE)
+df$mounting <- ifelse(df$mounting == "", FALSE, TRUE)
+
+# For the training age we convert the responses from a list of ages take to the
+# earliest attended age.
+df$train_age <- ifelse(
+    grepl('3 months or younger', df$train_age), '1-3 mo', df$train_age)
+df$train_age <- ifelse(
+    grepl('4 months', df$train_age), '4 mo', df$train_age)
+df$train_age <- ifelse(
+    grepl('5-6 months', df$train_age), '5-6 mo', df$train_age)
+is.na(df$train_age) <- df$train_age == "I don't know"
+df$train_age <- ordered(
+    df$train_age, levels=c('1-3 mo', '4 mo', '5-6 mo'))
+#df$train_age <- as.factor(df$train_age)
+
+# Boolean for restraining device use.
+df$device_used<- ifelse(
+    grepl('No devices were employed', df$restr_device), FALSE, TRUE)
+#df$restr_device <- as.factor(df$restr_device)
+
+# Convert training technique to reward or punishment.
+df$train_technique <- ifelse(
+    grepl('Rewarding', df$train_technique), 'reward', df$train_technique)
+df$train_technique <- ifelse(
+    grepl('combination', df$train_technique), 'punish', df$train_technique)
+df$train_technique <- ifelse(
+    grepl('Tough love', df$train_technique), 'punish', df$train_technique)
+df$train_technique <- ifelse(
+    df$train_technique == 'reward' | df$train_technique == 'punish',
+    df$train_technique, NA)
+df$train_technique <- as.factor(df$train_technique)
+
+# Assign training class count to maximum selected option.
+df$train_class_count <- ifelse(
+    grepl('1-3', df$train_class_count), '1-3', df$train_class_count)
+df$train_class_count <- ifelse(
+    grepl('4-6', df$train_class_count), '4-6', df$train_class_count)
+df$train_class_count <- ifelse(
+    grepl('7-9', df$train_class_count), '7-9', df$train_class_count)
+df$train_class_count <- ifelse(
+    grepl('10+', df$train_class_count), '10+', df$train_class_count)
+df$train_class_count <- ifelse(
+    grepl('10+', df$train_class_count), '10+', df$train_class_count)
+is.na(df$train_class_count) <- df$train_class_count == "I don't know"
+df$train_class_count <- ordered(
+    df$train_class_count, levels=c('1-3', '4-6', '7-9', '10+'))
+df$train_class_count <- as.factor(df$train_class_count)
+
+# Examine the tidied data.
+summary(df)
+```
+
+We can calculate the median and range for number of dogs per household using the
+owner IDs.
+
+```{r}
+summary(plyr::count(df, 'owner_id'))
+```
+
+The restraining device responses are stored as a comma separated string list.
+We extract the responses into boolean columns so that they are easier to work
+with.
+
+```{r}
+df$buckle_collar <- ifelse(
+    grepl('Buckle collar', df$restr_device), TRUE, FALSE)
+df$martingale <- ifelse(
+    grepl('Martingale collar', df$restr_device), TRUE, FALSE)
+df$slip_collar <- ifelse(
+    grepl('Nylon slip collar', df$restr_device), TRUE, FALSE)
+df$shock_collar <- ifelse(
+    grepl('Electric shock collar', df$restr_device), TRUE, FALSE)
+df$harness <- ifelse(
+    grepl('Harness', df$restr_device), TRUE, FALSE)
+df$harness <- ifelse(
+    grepl('harness', df$restr_device), TRUE, df$harness)
+df$head_halter <- ifelse(
+    grepl('Head halter', df$restr_device), TRUE, FALSE)
+df$choke_collar <- ifelse(
+    grepl('Metal \"choke\" collar', df$restr_device), TRUE, FALSE)
+df$prong_collar <- ifelse(
+    grepl('Prong collar', df$restr_device), TRUE, FALSE)
+df$no_devices <- ifelse(
+    grepl('No devices were employed', df$restr_device), TRUE, FALSE)
+df <- subset(df, select=-c(restr_device))
+
+summary(df)
+```
+
+## Visual Data Exploration
+
+It is possible that the training technique that participants have reported
+(e.g., reward-based training) is at odds with the training devices that were
+employed.
+
+```{r}
+devices <- c(
+  'buckle_collar',
+  'martingale',
+  'slip_collar',
+  'shock_collar',
+  'harness',
+  'head_halter',
+  'choke_collar',
+  'prong_collar'
+)
+
+plot_list <- list()
+for (i in 1:length(devices)) {
+  p <- ggplot(data=subset(df, !is.na(train_technique)),
+              aes_string(x=devices[i],fill='train_technique')) +
+    geom_bar() +
+    theme(legend.position="none")
+  plot_list[[i]] <- p
+}
+ggarrange(plotlist=plot_list, ncol=3, nrow=3, common.legend=TRUE,
+          legend="bottom")
+```
+The plot of the martingale usage is a good example of the anticipated trend;
+several particpants using a punishment-based device have indicated reward-based
+training. Let's calculate the number of dogs subjected to a punishing device
+when their owner believed they were using reward based training.
+
+```{r}
+punish_devices <- c(
+  'martingale',
+  'slip_collar',
+  'shock_collar',
+  'head_halter',
+  'choke_collar',
+  'prong_collar'
+)
+
+idx <- NULL
+for (i in 1:nrow(df)) {
+  row <- df[i, ]
+  method <- row$train_technique
+  if (is.na(method)) next
+  if (method == 'reward') {
+    for (dev in punish_devices) {
+      print(row[dev])
+      if (row[dev] == TRUE) {
+        idx <- c(idx, i)
+        break
+      }
+    }
+  }
+}
+
+print(length(idx))
+```
+
+Update the training technique to agree with the devices employed.
+
+```{r}
+df[idx, 'train_technique'] <- 'punish'
+summary(df)
+```
+
+We are investigating whether or not taking a puppy to training within the first
+six months has an effect on their overall outcome. So we start by visualizing
+the difference between attending and not attending puppy training for each
+attribute and outcome variable. We look at the attributes to see how fairly the
+two groups are split. We look at the outcomes to see if a visually distinct
+effect.
+
+```{r}
+# Generate plots for each attribute split by a simple predictor.
+pred <- 'train_6mo_or_less'
+attribs <- c(
+  'age_yrs',
+  'male',
+  'neutered',
+  'train_age',
+  'train_technique',
+  'train_class_count'
+)
+attribs <- sort(attribs)
+
+plot_list <- list()
+for (i in 1:length(attribs)) {
+  p <- ggplot(df, aes_string(x=attribs[i], fill=pred)) +
+    geom_bar() +
+    theme(legend.position="none")
+  plot_list[[i]] <- p
+}
+ggarrange(plotlist=plot_list, ncol=3, nrow=2, common.legend=TRUE,
+          legend="bottom")
+```
+In the plots above the value of "NA" for the training age corresponds to (1) the
+dog did not attend puppy training or (2) the owner was not sure if the dog
+attended puppy training.
+
+Now we look at the outcome split by the training attendence.
+
+```{r, fig.height=10, fig.width=10}
+# Generate split plots for each outcome.
+outcomes <- c(
+  'aggression',
+  'fear_anxiety',
+  'jumping',
+  'barking',
+  'coprophagia',
+  'compulsion',
+  'soil',
+  'rep_materials',
+  'hyperactive',
+  'destructive',
+  'escape',
+  'mounting'
+)
+outcomes <- sort(outcomes)
+
+plot_list <- list()
+for (i in 1:length(outcomes)) {
+  p <- ggplot(df, aes_string(x=outcomes[i], fill=pred)) +
+    geom_bar() +
+    theme(legend.position="none")
+  plot_list[[i]] <- p
+}
+ggarrange(plotlist=plot_list, ncol=3, nrow=4, common.legend=TRUE,
+          legend="bottom")
+```
+
+It was requested that we split the dogs that were trained at 6 months or less be
+split into two groups: (1) dogs trained at 3 months or less and (2) dogs trained
+from 4 months to 6 months. We regenerate the plots above with this split.
+
+```{r}
+# Group the training ages as requested and regenerate the split attribute plots.
+df$train_age <- as.factor(df$train_age)
+levels(df$train_age) <- list('1-3 mo'=c('1-3 mo'),'4-6 mo'=c('4 mo', '5-6 mo'))
+summary(df$train_age)
+
+df.tmp <- df[complete.cases(df[, 'train_age']),]
+plot_list <- list()
+for (i in 1:length(attribs)) {
+  if (attribs[i] == 'train_age') next
+  p <- ggplot(df.tmp, aes_string(x=attribs[i], fill='train_age')) +
+    geom_bar() +
+    theme(legend.position="none")
+  plot_list[[i]] <- p
+}
+ggarrange(plotlist=plot_list, ncol=3, nrow=2, common.legend=TRUE,
+          legend="bottom")
+```
+
+Now we look at the outcome split by the age of puppy training.
+
+```{r, fig.height=10, fig.width=10}
+# Generate split plots for each outcome.
+plot_list <- list()
+for (i in 1:length(outcomes)) {
+  p <- ggplot(df.tmp, aes_string(x=outcomes[i], fill='train_age')) +
+    geom_bar() +
+    theme(legend.position="none")
+  plot_list[[i]] <- p
+}
+ggarrange(plotlist=plot_list, ncol=3, nrow=4, common.legend=TRUE,
+          legend="bottom")
+```
+
+The splits look pretty even split; indicating that, for our study population,
+the age of initial training attendance does not seem to reduce the likelihood to
+exhibit any of the investigated behavior problems.
+
+It was also requested that we examine if the attendance of puppy training is a
+growing trend (i.e., if a greater proportion of young dogs attending puppy
+training in comparison to the older dogs).
+
+```{r}
+# We plot a bar graph of the frequency of attending training split by the dog's
+# age at the time of the study.
+ggplot(df, aes_string(x='age_yrs', fill='train_6mo_or_less')) +
+    geom_bar() +
+    labs(title='Frequency of Early Training vs Age in Years', x='Age (years)',
+         y='Frequency', fill='Early Training') +
+    theme(plot.title = element_text(hjust = 0.5))
+```
+
+From the plot above there does seem to be a trend that younger dogs are more
+likely to have attended puppy training. Let's get correlation values for this to
+verify the suspected trend.
+
+```{r}
+# Fit binomial logistic regression.
+glm.fit <- glm(train_6mo_or_less~age_yrs, data=df[,c(outcome, pred)],
+               family='binomial')
+print(summary(glm.fit))
+print(exp(cbind(OR=coef(glm.fit), suppressMessages(confint(glm.fit)))))
+```
+
+It was also requested that the distribution of mounting be examined by gender
+and neuter status.
+
+```{r}
+ggplot(df, aes_string(x='mounting', fill='male')) +
+    geom_bar() +
+    facet_wrap(neutered~.)
+```
+In the plot above, the left panel (labeled "No") is for dogs that are not
+neutered and the right panel (labeled "Yes") is for dogs that are neutered. From
+the plot it seems that males have a higher likelihood to mount.
+
+```{r}
+# We produce a three-way contingency table to further back the above plot.
+xtab <- xtabs(~mounting+male+neutered, data=df)
+print(xtab)
+```
+
+We have 97 non-neutered dogs and 274 neutered dogs. From the non-neutered dogs,
+20% (10/50) males mounted and 4% (2/47) females mounted. From the neutered dogs,
+22% (32/145) males mounted and 16% (21/129) females mounted. So we see the
+impact of gender on mounting, but not an impact of neutering on mounting. This
+could be due to the fact that the study sample consists of almost three times
+more neutered than non-neutered dogs.
+
+## Correlations
+
+The purpose of this study was to investigate the impact of puppy training on the
+development of problematic behaviors. The problematic behaviors are our
+*outcomes* and consist of:
+
+- Aggression
+- (Excessive) barking
+- Compulsion
+- Coprophagia
+- Destructive behavior
+- Escaping/running away
+- Fear/anxiety
+- House soiling
+- Hyperactivity/overactivity
+- Mounting
+- Problematic jumping
+- Rolling in repulsive materials
+
+Our main predictor variable is the attendance of puppy training.
+
+### Fisher Exact
+
+We check for correlation between the predictor and each outcome. Here we perform
+the Fisher Exact test with a Benjamini-Hochberg correction.
+
+```{r}
+pred <- 'train_6mo_or_less'
+
+idx <- NULL
+p_values <- NULL
+odds_ratios <- NULL 
+for (outcome in outcomes) {
+  tbl <- table(df[, pred], df[, outcome], dnn=c(pred, outcome))
+  fisher <- fisher.test(tbl)
+  idx <- c(idx, outcome)
+  p_values <- c(p_values, fisher$p.value)
+  print(p_values)
+  odds_ratios <- c(odds_ratios, fisher$estimate[[1]])
+}
+
+# Correct for the possibility of Type I errors.
+p_values <- p.adjust(p_values, method='BH')
+
+# Form a result data frame.
+df_out <- data.frame(outcome=idx, p_value=p_values,
+                     odds_ratio=odds_ratios)
+df_out$level <- ''
+#df_out[df_out$p_value <= .1, 'level'] <- '.'
+df_out[df_out$p_value <= .05, 'level'] <- '*'
+df_out[df_out$p_value <= .01, 'level'] <- '**'
+df_out[df_out$p_value <= .001, 'level'] <- '***'
+
+df_out$dir <- ''
+df_out[df_out$odds_ratio < 1, 'dir'] <- '-'
+df_out[df_out$odds_ratio > 1, 'dir'] <- '+'
+
+print(knitr::kable(df_out))
+```
+
+From the Fisher Exact analysis we see that the attendance of puppy training
+significantly reduces the likelihood of several problematic behaviors.
+
+We are also interested in seeing if there is a difference in outcomes between
+dogs that started training at 1-3 months and those that started at 4-6 months.
+
+```{r}
+df_tmp1 <- subset(df, train_6mo_or_less == TRUE)
+pred <- 'train_age'
+
+idx <- NULL
+p_values <- NULL
+odds_ratios <- NULL 
+for (outcome in outcomes) {
+  tbl <- table(df_tmp1[, pred], df_tmp1[, outcome], dnn=c(pred, outcome))
+  fisher <- fisher.test(tbl)
+  idx <- c(idx, outcome)
+  p_values <- c(p_values, fisher$p.value)
+  odds_ratios <- c(odds_ratios, fisher$estimate[[1]])
+}
+
+# Correct for the possibility of Type I errors.
+p_values <- p.adjust(p_values, method='BH')
+
+# Form a result data frame.
+df_out <- data.frame(outcome=idx, p_value=p_values,
+                     odds_ratio=odds_ratios)
+df_out$level <- ''
+#df_out[df.out$p_value <= .1, 'level'] <- '.'
+df_out[df_out$p_value <= .05, 'level'] <- '*'
+df_out[df_out$p_value <= .01, 'level'] <- '**'
+df_out[df_out$p_value <= .001, 'level'] <- '***'
+
+df_out$dir <- ''
+df_out[df_out$odds_ratio < 1, 'dir'] <- '-'
+df_out[df_out$odds_ratio > 1, 'dir'] <- '+'
+
+print(knitr::kable(df_out))
+```
+
+It looks as if there was no significant difference in outcome between the two
+training start age groups.
+
+We also run a correlation analysis to determine if training technique (i.e.,
+reward based) is associated with a particular trend in outcome.
+
+```{r}
+pred <- 'reward'
+df.tmp1[,pred] <- ifelse(df.tmp1$train_technique == 'reward', TRUE, FALSE)
+
+idx <- NULL
+p.values <- NULL
+odds.ratios <- NULL 
+for (outcome in outcomes) {
+  tbl <- table(df.tmp1[, pred], df.tmp1[, outcome], dnn=c(pred, outcome))
+  fisher <- fisher.test(tbl)
+  idx <- c(idx, outcome)
+  p.values <- c(p.values, fisher$p.value)
+  odds.ratios <- c(odds.ratios, fisher$estimate[[1]])
+}
+
+# Correct for the possibility of Type I errors.
+p.values <- p.adjust(p.values, method='BH')
+
+# Form a result data frame.
+df.out <- data.frame(outcome=idx, p.value=p.values,
+                     odds.ratio=odds.ratios)
+df.out$level <- ''
+#df.out[df.out$p.value <= .1, 'level'] <- '.'
+df.out[df.out$p.value <= .05, 'level'] <- '*'
+df.out[df.out$p.value <= .01, 'level'] <- '**'
+df.out[df.out$p.value <= .001, 'level'] <- '***'
+
+df.out$dir <- ''
+df.out[df.out$odds.ratio < 1, 'dir'] <- '-'
+df.out[df.out$odds.ratio > 1, 'dir'] <- '+'
+
+print(knitr::kable(df.out))
+```
+
+It seems that there is not enough evidence to determine if reward or punishment
+based training was correlated with outcome.
+
+Let's see if there is a difference in outcome when comparing dogs that attended
+only one to three training sessions versus those who attended more.
+
+```{r}
+df.tmp2 <- df.tmp1[!is.na(df.tmp1$train_class_count),]
+pred='many.classes'
+df.tmp2[,pred] <- ifelse(df.tmp2$train_class_count == '1-3', FALSE, TRUE)
+
+idx <- NULL
+p.values <- NULL
+odds.ratios <- NULL 
+for (outcome in outcomes) {
+  tbl <- table(df.tmp2[, pred], df.tmp2[, outcome], dnn=c(pred, outcome))
+  fisher <- fisher.test(tbl)
+  idx <- c(idx, outcome)
+  p.values <- c(p.values, fisher$p.value)
+  odds.ratios <- c(odds.ratios, fisher$estimate[[1]])
+}
+
+# Correct for the possibility of Type I errors.
+p.values <- p.adjust(p.values, method='BH')
+
+# Form a result data frame.
+df.out <- data.frame(outcome=idx, p.value=p.values,
+                     odds.ratio=odds.ratios)
+df.out$level <- ''
+#df.out[df.out$p.value <= .1, 'level'] <- '.'
+df.out[df.out$p.value <= .05, 'level'] <- '*'
+df.out[df.out$p.value <= .01, 'level'] <- '**'
+df.out[df.out$p.value <= .001, 'level'] <- '***'
+
+df.out$dir <- ''
+df.out[df.out$odds.ratio < 1, 'dir'] <- '-'
+df.out[df.out$odds.ratio > 1, 'dir'] <- '+'
+
+print(knitr::kable(df.out))
+```
+
+### Logistic Regression
+
+For regression we start with the whole dataset and look for interaction effects
+from:
+
+- Current age
+- Gender
+- Neuter status
+
+```{r, warning=FALSE}
+pred <- 'train_6mo_or_less'
+glm_attribs <- c(
+  'age_yrs',
+  'male',
+  'neutered'
+)
+for (outcome in outcomes) {
+  print(paste(replicate(80, '-'), collapse=''))
+  print(outcome)
+  f <- as.formula(paste0(outcome, '~', '.'))
+  glm_fit <- glm(f, data=df[,c(outcome, pred, glm_attribs)], family='binomial')
+  print(summary(glm_fit))
+  print(exp(cbind(OR=coef(glm_fit), suppressMessages(confint(glm_fit)))))
+}
+```
+
+Next, we take the dataset of dogs that attended training and indicated a number
+of training sessions and look for additional interaction effects from:
+
+- Start age of training
+- Training technique
+
+```{r, warning=FALSE}
+pred <- 'train_class_count'
+glm.attribs <- c(
+  'age_yrs',
+  'male',
+  'neutered',
+  'train_age',
+  'train_technique'
+)
+for (outcome in outcomes) {
+  print(paste(replicate(80, '-'), collapse=''))
+  print(outcome)
+  df.tmp <- df.tmp2[,c(outcome, pred, glm.attribs)]
+  f <- as.formula(paste0(outcome, '~', '.'))
+  glm.fit <- glm(f, data=df.tmp, family='binomial')
+  print(summary(glm.fit))
+  print(exp(cbind(OR=coef(glm.fit), suppressMessages(confint(glm.fit)))))
+}
+```

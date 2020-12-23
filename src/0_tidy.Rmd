@@ -113,8 +113,22 @@ str(df[, factors])
 It's clear that some factor columns can be converted to boolean (i.e., logical).
 
 ```{r}
-df$at_least_1yo <- ifelse(df$at_least_1yo == 'Yes', TRUE, FALSE)
-df$neutered <- ifelse(df$neutered == 'Yes', TRUE, FALSE)
+df <- df %>%
+  mutate(at_least_1yo = ifelse(at_least_1yo == 'Yes', TRUE, FALSE)) %>%
+  mutate(neutered = ifelse(neutered == 'Yes', TRUE, FALSE)) %>%
+  mutate(aggression = ifelse(aggression == "", FALSE, TRUE)) %>%
+  mutate(fear_anxiety = ifelse(fear_anxiety == "", FALSE, TRUE)) %>%
+  mutate(jumping = ifelse(jumping == "", FALSE, TRUE)) %>%
+  mutate(barking = ifelse(barking == "", FALSE, TRUE)) %>%
+  mutate(coprophagia = ifelse(coprophagia == "", FALSE, TRUE)) %>%
+  mutate(compulsion = ifelse(compulsion == "", FALSE, TRUE)) %>%
+  mutate(house_soiling = ifelse(
+    soil_when != "" | soil_how != "" | soil_where != "", FALSE, TRUE)) %>%
+  mutate(rep_materials = ifelse(rep_materials == "", FALSE, TRUE)) %>%
+  mutate(hyperactive = ifelse(hyperactive == "", FALSE, TRUE)) %>%
+  mutate(destructive = ifelse(destructive == "", FALSE, TRUE)) %>%
+  mutate(escape = ifelse(escape == "", FALSE, TRUE)) %>%
+  mutate(mounting = ifelse(mounting == "", FALSE, TRUE))
 
 str(df)
 ```
@@ -124,6 +138,9 @@ str(df)
 We derive some columns for ease of use and improved clarity.
 
 ```{r}
+df <- df %>%
+  mutate(male = ifelse(df$sex == 'Male', FALSE, TRUE))
+str(df)
 ```
 
 # Dropping Columns
@@ -131,7 +148,16 @@ We derive some columns for ease of use and improved clarity.
 Drop columns that serve no purpose with the analysis.
 
 ```{r}
-df <- subset(df, select=-c(take_again))
+df <- subset(df, select=-c(take_again, soil_when, soil_how, soil_where,
+                           at_least_1yo))
+```
+
+# Final Summary of Data
+
+Take a last look at the data before saving it to disk.
+
+```{r}
+summary(df)
 ```
 
 # Saving the Tidy Data
