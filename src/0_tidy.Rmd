@@ -118,3 +118,12 @@ df$neutered <- ifelse(df$neutered == 'Yes', TRUE, FALSE)
 
 str(df)
 ```
+
+# Saving the Tidy Data
+
+We save the data to a file in RDS format so that the data types are saved and so
+that the output is compressed.
+
+```{r}
+saveRDS(df, '../data/tidy.rds')
+```
