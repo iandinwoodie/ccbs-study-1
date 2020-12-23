@@ -1,0 +1,60 @@
+---
+title: "Tidying the Data"
+author: "Ian Dinwoodie"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo=TRUE)
+```
+
+# Loading the Data
+
+Load the raw data and verify its dimensions and structure.
+
+```{r}
+df <- read.csv('../data/dogs.csv', header=TRUE, skipNul=TRUE)
+dim(df)
+str(df)
+```
+
+We see that we have 1095 responses across 26 fields. The columns names are not
+quite servicable in their current state, so we rename them for ease of use.
+
+```{r}
+names <- c(
+  'acq_12_wo_or_less',
+  'at_least_1yo',
+  'age_yrs',
+  'sex',
+  'neutered',
+  'train_6mo_or_less',
+  'train_age',
+  'train_class_count',
+  'train_technique',
+  'restr_device',
+  'aggression',
+  'fear_anxiety',
+  'jumping',
+  'barking',
+  'coprophagia',
+  'compulsion',
+  'soil_when',
+  'soil_how',
+  'soil_where',
+  'rep_materials',
+  'hyperactive',
+  'destructive',
+  'escape',
+  'mounting',
+  'take_again',
+  'owner_id'
+)
+colnames(df) <- names
+str(df)
+```
+
+We don't want to interpret every column as characters (`chr`), let's start by
+specifying the continuous variables.
