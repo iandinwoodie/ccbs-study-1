@@ -21,7 +21,7 @@ str(df)
 ```
 
 We see that we have 1095 responses across 26 fields. The columns names are not
-quite servicable in their current state, so we rename them for ease of use.
+quite serviceable in their current state, so we rename them for ease of use.
 
 ```{r}
 names <- c(
@@ -72,7 +72,24 @@ summary(df$age_yrs)
 
 ### Factors
 
-We convert a bulk of the columns to factors.
+We convert a bulk of the columns to factors. Before the conversion, we need to
+deal with responses that are comma separated lists.
+
+```{r}
+# For the training age we convert the responses from a list of ages take to the
+# earliest attended age.
+df$train_age <- ifelse(
+    grepl('3 months or younger', df$train_age), '1-3 mo', df$train_age)
+df$train_age <- ifelse(
+    grepl('4 months', df$train_age), '4 mo', df$train_age)
+df$train_age <- ifelse(
+    grepl('5-6 months', df$train_age), '5-6 mo', df$train_age)
+is.na(df$train_age) <- df$train_age == "I don't know"
+df$train_age <- ordered(
+    df$train_age, levels=c('1-3 mo', '4 mo', '5-6 mo'))
+```
+
+Now we perform the conversion to factor data type.
 
 ```{r}
 factors <- c(
@@ -80,7 +97,7 @@ factors <- c(
   'at_least_1yo',
   'sex',
   'neutered',
-  'train_age',
+#  'train_age',
   'train_class_count',
   'train_technique',
   'restr_device',
@@ -120,14 +137,15 @@ df <- df %>%
 
 # Deriving Columns
 
-We derive some columns for ease of use and improved clarity.
+We derive some columns for ease of use and improved clarity, especially when
+responses are comma separated lists.
 
 ```{r}
 df <- df %>%
-  mutate(male = ifelse(df$sex == 'Male', FALSE, TRUE))
+  mutate(male = ifelse(sex == 'Male', FALSE, TRUE))
 ```
 
-# Transformations
+# Response Complexity Reductions
 
 To start, we reduce the behavior problems to boolean indicators.
 
