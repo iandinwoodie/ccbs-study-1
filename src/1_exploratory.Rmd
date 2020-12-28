@@ -1,0 +1,80 @@
+---
+title: "Building Tidy Data"
+author: "Ian Dinwoodie"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(ggpubr)
+knitr::opts_chunk$set(echo=TRUE)
+```
+
+# Loading the Data
+
+Load the raw data and verify its dimensions and structure.
+
+```{r}
+df <- readRDS('../data/tidy.Rds')
+dim(df)
+str(df)
+```
+
+# Adjusting Training Methods
+
+It is possible that the training technique that participants have reported
+(e.g., reward-based training) is at odds with the training devices that were
+employed.
+
+```{r}
+devices <- c(
+  'buckle_collar',
+  'martingale',
+  'slip_collar',
+  'shock_collar',
+  'harness',
+  'head_halter',
+  'choke_collar',
+  'prong_collar'
+)
+
+plot_list <- list()
+for (i in 1:length(devices)) {
+  p <- ggplot(data=subset(df, !is.na(train_technique)),
+              aes_string(x=devices[i],fill='train_technique')) +
+    geom_bar() +
+    theme(legend.position="none")
+  plot_list[[i]] <- p
+}
+ggarrange(plotlist=plot_list, ncol=3, nrow=3, common.legend=TRUE,
+          legend="bottom")
+```
+
+The plot of the martingale usage is a good example of the anticipated trend;
+several participants using a punishment-based device have indicated reward-based
+training. Let's calculate the number of dogs subjected to a punishing device
+when their owner believed they were using reward based training and apply the
+necessary adjustments.
+
+```{r}
+cnt <- count(df$train_technique)[2,2]
+df <- df %>%
+  mutate(train_technique = ifelse(
+    df$martingale | df$slip_collar | df$shock_collar | df$choke_collar
+    | df$prong_collar, 'punish', train_technique))
+diff <- cnt - count(df$train_technique)[2,2]
+print(diff)
+summary(df)
+```
+
+
+
+# Saving the Exploratory Data
+
+Save the data to a file in RDS format so that the data types are saved and so
+that the output is compressed.
+
+```{r}
+saveRDS(df, '../data/exploratory.Rds')
+```
