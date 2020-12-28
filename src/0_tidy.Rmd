@@ -143,6 +143,12 @@ df <- df %>%
 str(df)
 ```
 
+# Applying Inclusion Criteria
+
+```{r}
+df <- filter(df, at_least_1yo == TRUE, age_yrs >= 1, age_yrs <= 35)
+```
+
 # Dropping Columns
 
 Drop columns that serve no purpose with the analysis.
@@ -157,6 +163,7 @@ df <- subset(df, select=-c(take_again, soil_when, soil_how, soil_where,
 Take a last look at the data before saving it to disk.
 
 ```{r}
+dim(df)
 summary(df)
 ```
 
