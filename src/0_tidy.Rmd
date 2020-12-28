@@ -155,7 +155,7 @@ Drop columns that serve no purpose with the analysis.
 
 ```{r}
 df <- subset(df, select=-c(take_again, soil_when, soil_how, soil_where,
-                           at_least_1yo))
+                           at_least_1yo, sex))
 ```
 
 # Final Summary of Data
