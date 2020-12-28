@@ -173,6 +173,28 @@ df <- df %>%
 # Boolean for restraining device use.
 df$device_used<- ifelse(
     grepl('No devices were employed', df$restr_device), FALSE, TRUE)
+
+# Derive a column for each restraining device.
+df$buckle_collar <- ifelse(
+    grepl('Buckle collar', df$restr_device), TRUE, FALSE)
+df$martingale <- ifelse(
+    grepl('Martingale collar', df$restr_device), TRUE, FALSE)
+df$slip_collar <- ifelse(
+    grepl('Nylon slip collar', df$restr_device), TRUE, FALSE)
+df$shock_collar <- ifelse(
+    grepl('Electric shock collar', df$restr_device), TRUE, FALSE)
+df$harness <- ifelse(
+    grepl('Harness', df$restr_device), TRUE, FALSE)
+df$harness <- ifelse(
+    grepl('harness', df$restr_device), TRUE, df$harness)
+df$head_halter <- ifelse(
+    grepl('Head halter', df$restr_device), TRUE, FALSE)
+df$choke_collar <- ifelse(
+    grepl('Metal \"choke\" collar', df$restr_device), TRUE, FALSE)
+df$prong_collar <- ifelse(
+    grepl('Prong collar', df$restr_device), TRUE, FALSE)
+df$no_devices <- ifelse(
+    grepl('No devices were employed', df$restr_device), TRUE, FALSE)
 ```
 
 # Response Complexity Reductions
@@ -213,7 +235,7 @@ Drop columns that serve no purpose with the analysis.
 
 ```{r}
 df <- subset(df, select=-c(take_again, soil_when, soil_how, soil_where,
-                           at_least_1yo, sex))
+                           at_least_1yo, sex, restr_device))
 ```
 
 # Final Summary
