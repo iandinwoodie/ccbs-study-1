@@ -58,17 +58,39 @@ when their owner believed they were using reward based training and apply the
 necessary adjustments.
 
 ```{r}
+print('Training techniques:')
+summary(df$train_technique)
 cnt <- count(df$train_technique)[2,2]
+
 df <- df %>%
-  mutate(train_technique = ifelse(
-    df$martingale | df$slip_collar | df$shock_collar | df$choke_collar
-    | df$prong_collar, 'punish', train_technique))
-diff <- cnt - count(df$train_technique)[2,2]
-print(diff)
-summary(df)
+  mutate(adj_train_technique = factor(ifelse(
+    is.na(train_technique), NA, ifelse(
+      martingale | slip_collar | shock_collar | choke_collar | prong_collar,
+      'punish', 'reward'))))
+
+print('Training techniques (adjusted):')
+summary(df$adj_train_technique)
+
+diff <- cnt - count(df$adj_train_technique)[2,2]
+print(paste('Delta:', diff))
 ```
 
+Let's reconstruct the plot above to visually see the adjustment.
 
+```{r}
+plot_list <- list()
+for (i in 1:length(devices)) {
+  p <- ggplot(data=subset(df, !is.na(adj_train_technique)),
+              aes_string(x=devices[i],fill='adj_train_technique')) +
+    geom_bar() +
+    theme(legend.position="none")
+  plot_list[[i]] <- p
+}
+ggarrange(plotlist=plot_list, ncol=3, nrow=3, common.legend=TRUE,
+          legend="bottom")
+```
+We can see that the employment of a device that punishes is reflected in the
+training technique.
 
 # Saving the Exploratory Data
 
