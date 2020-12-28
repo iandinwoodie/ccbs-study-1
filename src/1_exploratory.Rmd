@@ -8,6 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(ggpubr)
+library(GGally)
 knitr::opts_chunk$set(echo=TRUE)
 ```
 
@@ -109,10 +110,24 @@ It is also used to calculate the number of dogs per household.
 summary(plyr::count(df, 'owner_id'))
 ```
 
-Now we can drop the column so to simply the data set.
+Now we can drop the column to simply the data set.
 
 ```{r}
 df <- subset(df, select=-c(owner_id))
+```
+
+## Behavior Problem Indicator
+
+Let's also add a column to signal if the dog has a behavior problem.
+
+```{r}
+df <- df %>%
+  mutate(behav_problem = ifelse(
+    aggression | fear_anxiety | jumping | barking | coprophagia | compulsion
+    | house_soiling | rep_materials | hyperactive | destructive | escape
+    | mounting, TRUE, FALSE))
+
+count(df$behav_problem)
 ```
 
 # Basic Exploration
@@ -124,13 +139,26 @@ We start with an overview of the data we are working with.
 ```{r}
 summary(df)
 ```
+We also create pairwise scatter plots for all columns except for the individual
+behavior problems (otherwise there would be too many plots.)
+
+```{r, fig.height=5, fig.width=5}
+df %>%
+  na.omit %>%
+  ggpairs(columns=c(1:6, 19:20, 30), progress=FALSE,
+          ggplot2::aes(colour=behav_problem))
+```
+
+Observations on scatter plots:
+
+* 
 
 ## Continuous Variables
 
 The age of the dog is the only continuous variable we are working with.
 
 ```{r}
-plot(df[1:6])
+plot(df)
 ```
 
 ```{r}
