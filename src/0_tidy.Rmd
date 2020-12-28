@@ -234,8 +234,16 @@ dim(df)
 Drop columns that serve no purpose with the analysis.
 
 ```{r}
-df <- subset(df, select=-c(take_again, soil_when, soil_how, soil_where,
-                           at_least_1yo, sex, restr_device))
+df <- subset(df, select=-c(
+  take_again, # survey software logic variable
+  soil_when,
+  soil_how,
+  soil_where,
+  at_least_1yo, # survey software logic variable
+  sex, # replaced with a male column
+  restr_device, # devices moved into their own columns
+  no_devices # mirrors the device_used column
+  ))
 ```
 
 # Final Summary
