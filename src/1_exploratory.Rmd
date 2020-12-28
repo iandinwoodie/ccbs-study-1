@@ -21,7 +21,9 @@ dim(df)
 str(df)
 ```
 
-# Adjusting Training Methods
+# Pre-exploration Adjustments
+
+## Training Methods
 
 It is possible that the training technique that participants have reported
 (e.g., reward-based training) is at odds with the training devices that were
@@ -51,7 +53,7 @@ ggarrange(plotlist=plot_list, ncol=3, nrow=3, common.legend=TRUE,
           legend="bottom")
 ```
 
-The plot of the martingale usage is a good example of the anticipated trend;
+The plot of the martingale usage is a good example of the anticipated trend:
 several participants using a punishment-based device have indicated reward-based
 training. Let's calculate the number of dogs subjected to a punishing device
 when their owner believed they were using reward based training and apply the
@@ -91,6 +93,18 @@ ggarrange(plotlist=plot_list, ncol=3, nrow=3, common.legend=TRUE,
 ```
 We can see that the employment of a device that punishes is reflected in the
 training technique.
+
+# Basic Exploration
+
+## Overview of Data Set
+
+We start with an overview of the data we are working with.
+
+```{r}
+summary(df)
+```
+
+## Continuous Variables
 
 # Saving the Exploratory Data
 
