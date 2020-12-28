@@ -98,6 +98,21 @@ df$train_technique <- ifelse(
 df$train_technique <- ifelse(
     df$train_technique == 'reward' | df$train_technique == 'punish',
     df$train_technique, NA)
+
+# Assign training class count to maximum selected option.
+df$train_class_count <- ifelse(
+    grepl('1-3', df$train_class_count), '1-3', df$train_class_count)
+df$train_class_count <- ifelse(
+    grepl('4-6', df$train_class_count), '4-6', df$train_class_count)
+df$train_class_count <- ifelse(
+    grepl('7-9', df$train_class_count), '7-9', df$train_class_count)
+df$train_class_count <- ifelse(
+    grepl('10+', df$train_class_count), '10+', df$train_class_count)
+df$train_class_count <- ifelse(
+    grepl('10+', df$train_class_count), '10+', df$train_class_count)
+is.na(df$train_class_count) <- df$train_class_count == "I don't know"
+df$train_class_count <- ordered(
+    df$train_class_count, levels=c('1-3', '4-6', '7-9', '10+'))
 ```
 
 Now we perform the conversion to factor data type.
@@ -109,7 +124,7 @@ factors <- c(
   'sex',
   'neutered',
 #  'train_age',
-  'train_class_count',
+#  'train_class_count',
   'train_technique',
   'restr_device',
   'aggression',
