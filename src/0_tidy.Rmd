@@ -168,11 +168,10 @@ responses are comma separated lists.
 
 ```{r}
 df <- df %>%
-  mutate(male = ifelse(sex == 'Male', FALSE, TRUE))
-
-# Boolean for restraining device use.
-df$device_used<- ifelse(
-    grepl('No devices were employed', df$restr_device), FALSE, TRUE)
+  mutate(male = ifelse(sex == 'Male', FALSE, TRUE)) %>%
+  mutate(device_used = ifelse(
+    restr_device == "", NA, ifelse(
+      grepl('No devices were employed', restr_device), FALSE, TRUE)))
 
 # Derive a column for each restraining device.
 df$buckle_collar <- ifelse(
