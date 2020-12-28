@@ -169,6 +169,10 @@ responses are comma separated lists.
 ```{r}
 df <- df %>%
   mutate(male = ifelse(sex == 'Male', FALSE, TRUE))
+
+# Boolean for restraining device use.
+df$device_used<- ifelse(
+    grepl('No devices were employed', df$restr_device), FALSE, TRUE)
 ```
 
 # Response Complexity Reductions
