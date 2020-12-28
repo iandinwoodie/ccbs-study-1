@@ -115,7 +115,24 @@ It's clear that some factor columns can be converted to boolean (i.e., logical).
 ```{r}
 df <- df %>%
   mutate(at_least_1yo = ifelse(at_least_1yo == 'Yes', TRUE, FALSE)) %>%
-  mutate(neutered = ifelse(neutered == 'Yes', TRUE, FALSE)) %>%
+  mutate(neutered = ifelse(neutered == 'Yes', TRUE, FALSE))
+```
+
+# Deriving Columns
+
+We derive some columns for ease of use and improved clarity.
+
+```{r}
+df <- df %>%
+  mutate(male = ifelse(df$sex == 'Male', FALSE, TRUE))
+```
+
+# Transformations
+
+To start, we reduce the behavior problems to boolean indicators.
+
+```{r}
+df <- df %>%
   mutate(aggression = ifelse(aggression == "", FALSE, TRUE)) %>%
   mutate(fear_anxiety = ifelse(fear_anxiety == "", FALSE, TRUE)) %>%
   mutate(jumping = ifelse(jumping == "", FALSE, TRUE)) %>%
@@ -133,23 +150,16 @@ df <- df %>%
 str(df)
 ```
 
-# Deriving Columns
+# Dropping Excess Data
 
-We derive some columns for ease of use and improved clarity.
-
-```{r}
-df <- df %>%
-  mutate(male = ifelse(df$sex == 'Male', FALSE, TRUE))
-str(df)
-```
-
-# Applying Inclusion Criteria
+## Applying Inclusion Criteria
 
 ```{r}
 df <- filter(df, at_least_1yo == TRUE, age_yrs >= 1, age_yrs <= 35)
+dim(df)
 ```
 
-# Dropping Columns
+## Dropping Columns
 
 Drop columns that serve no purpose with the analysis.
 
@@ -158,7 +168,7 @@ df <- subset(df, select=-c(take_again, soil_when, soil_how, soil_where,
                            at_least_1yo, sex))
 ```
 
-# Final Summary of Data
+# Final Summary
 
 Take a last look at the data before saving it to disk.
 
