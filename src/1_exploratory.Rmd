@@ -176,23 +176,35 @@ the transformed column and rely on the original.
 
 ## Discrete Variables
 
-```{r, fig.height=10, fig.width=10}
+```{r, fig.height=5, fig.width=5}
 discrete <- c(
   'acq_12_wo_or_less',
   'neutered',
   'train_6mo_or_less',
   'male',
-  'behav_problem'
+  'behav_problem',
+  'aggression',
+  'fear_anxiety',
+  'jumping',
+  'barking',
+  'coprophagia',
+  'compulsion',
+  'rep_materials',
+  'hyperactive',
+  'destructive',
+  'escape',
+  'mounting',
+  'house_soiling'
 )
 
 plot_list <- list()
-for (i in 1:length(outcomes)) {
-  p <- ggplot(df, aes_string(x=outcomes[i], fill='train_age')) +
+for (i in 1:length(discrete)) {
+  p <- ggplot(df, aes_string(x=discrete[i])) +
     geom_bar() +
     theme(legend.position="none")
   plot_list[[i]] <- p
 }
-ggarrange(plotlist=plot_list, ncol=3, nrow=4, common.legend=TRUE,
+ggarrange(plotlist=plot_list, ncol=4, nrow=5, common.legend=TRUE,
           legend="bottom")
 ```
 
