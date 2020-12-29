@@ -23,7 +23,7 @@ dim(df)
 str(df)
 ```
 
-# Pre-exploration Adjustments
+# Accounting for the Human-Factor
 
 ## Training Methods
 
@@ -117,9 +117,11 @@ Now we can drop the column to simply the data set.
 df <- subset(df, select=-c(owner_id))
 ```
 
-## Behavior Problem Indicator
+# Basic Exploration
 
-Let's also add a column to signal if the dog has a behavior problem.
+## Overview of Data Set
+
+Before we look at the data, let's add a basic behavior problem indicator column.
 
 ```{r}
 df <- df %>%
@@ -131,11 +133,7 @@ df <- df %>%
 summary(df$behav_problem)
 ```
 
-# Basic Exploration
-
-## Overview of Data Set
-
-We start with an overview of the data we are working with.
+Let's take a look at the data set as we head toward analysis.
 
 ```{r}
 summary(df)
