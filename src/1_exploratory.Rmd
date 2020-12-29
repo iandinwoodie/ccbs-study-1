@@ -9,6 +9,7 @@ output: html_document
 library(tidyverse)
 library(ggpubr)
 library(GGally)
+library(e1071) 
 knitr::opts_chunk$set(echo=TRUE)
 ```
 
@@ -146,8 +147,7 @@ columns for brevity.
 
 ```{r, fig.height=5, fig.width=5}
 df %>%
-  ggpairs(columns=c(1:4, 19), progress=FALSE,
-          ggplot2::aes(colour=behav_problem))
+  ggpairs(columns=c(1:4, 19), progress=FALSE, aes(color=behav_problem))
 ```
 
 ## Continuous Variables
@@ -156,6 +156,44 @@ The age of the dog is the only continuous variable we are working with.
 
 ```{r}
 ggplot(df, aes(age_yrs)) + geom_bar()
+skewness(df$age_yrs)
+```
+
+We see a slight right skew in the plot. Let's try to center it by applying a log
+transform.
+
+```{r}
+df <- df %>%
+  mutate(log_age_yrs = log(age_yrs))
+ggplot(df, aes(log_age_yrs)) + geom_bar()
+skewness(df$log_age_yrs)
+
+df <- subset(df, select=-c(log_age_yrs))
+```
+
+We see that the log transform resulted in a greater absolute skew, so we drop
+the transformed column and rely on the original.
+
+## Discrete Variables
+
+```{r, fig.height=10, fig.width=10}
+discrete <- c(
+  'acq_12_wo_or_less',
+  'neutered',
+  'train_6mo_or_less',
+  'male',
+  'behav_problem'
+)
+
+plot_list <- list()
+for (i in 1:length(outcomes)) {
+  p <- ggplot(df, aes_string(x=outcomes[i], fill='train_age')) +
+    geom_bar() +
+    theme(legend.position="none")
+  plot_list[[i]] <- p
+}
+ggarrange(plotlist=plot_list, ncol=3, nrow=4, common.legend=TRUE,
+          legend="bottom")
 ```
 
 # Saving the Exploratory Data
