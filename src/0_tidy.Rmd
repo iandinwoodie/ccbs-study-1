@@ -238,7 +238,11 @@ str(df)
 ```{r}
 df <- filter(df, at_least_1yo == TRUE, age_yrs >= 1, age_yrs <= 35)
 dim(df)
+length(unique(df$owner_id))
 ```
+
+We dropped 72 responses for dogs and 28 owners as a result of the inclusion
+criteria.
 
 ## Dropping Columns
 
