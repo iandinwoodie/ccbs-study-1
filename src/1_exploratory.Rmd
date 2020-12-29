@@ -111,7 +111,8 @@ It is also used to calculate the number of dogs per household.
 summary(plyr::count(df, 'owner_id'))
 ```
 
-Now we can drop the column to simply the data set.
+We see the median number of dogs per household is 1 (range: 1 to 8). Now we can
+drop the column to simply the data set.
 
 ```{r}
 df <- subset(df, select=-c(owner_id))
