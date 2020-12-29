@@ -155,15 +155,7 @@ df %>%
 The age of the dog is the only continuous variable we are working with.
 
 ```{r}
-plot(df)
-```
-
-```{r}
-ggplot(df, aes_string(x='age_yrs', fill='train_6mo_or_less')) +
-    geom_bar() +
-    labs(title='Frequency of Early Training vs Age in Years', x='Age (years)',
-         y='Frequency', fill='Early Training') +
-    theme(plot.title = element_text(hjust = 0.5))
+ggplot(df, aes(age_yrs)) + geom_bar()
 ```
 
 # Saving the Exploratory Data
