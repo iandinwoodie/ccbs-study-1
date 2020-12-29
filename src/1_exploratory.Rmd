@@ -142,10 +142,20 @@ summary(df)
 Notable observations:
 
 * Median dog age is 7 yrs (range: 1 to 19 yrs).
+  * More than half (54.4%) were acquired at 12 weeks or less.
 * A majority (87.1%) of dogs were neutered.
 * The gender split is nearly even with 48.6% males.
-* About half of the dogs (48.3%) attended training at 6 months or earlier.
-  * TODO: add observations about training columns.
+* About half of the dogs (48.3%) attended training at 6 months old or earlier
+(i.e., puppy training).
+  * About half (47.4%) of which started attending in the 1-3 month range.
+  * A majority (87.4%) of the dogs that attended puppy training were subject to
+  some form of restraining device.
+    * The buckle collar was the most popular device at 47.6% usage.
+    * The shock collar was the least popular at 1.8% usage.
+  * A vast majority (89.1%) were believed to have been subjected to reward-based
+  training.
+    * Correcting for punishing restraint devices, only 64.0% were truly subject
+    to reward based training; a 25.1% difference!
 * A vast majority of dogs (99.3%) were reported to exhibit at least one type of
 problematic behavior.
   * The top 3 most frequent behavior problems were fear/anxiety, aggression, and
