@@ -139,19 +139,16 @@ We start with an overview of the data we are working with.
 ```{r}
 summary(df)
 ```
-We also create pairwise scatter plots for all columns except for the individual
-behavior problems (otherwise there would be too many plots.)
+
+We create pairwise scatter plots for columns that all participants were
+presented (i.e., no NA responses) and we exclude the individual behavior problem
+columns for brevity.
 
 ```{r, fig.height=5, fig.width=5}
 df %>%
-  na.omit %>%
-  ggpairs(columns=c(1:6, 19:20, 30), progress=FALSE,
+  ggpairs(columns=c(1:4, 19), progress=FALSE,
           ggplot2::aes(colour=behav_problem))
 ```
-
-Observations on scatter plots:
-
-* 
 
 ## Continuous Variables
 
