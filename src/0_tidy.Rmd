@@ -92,10 +92,11 @@ df <- df %>%
 
 # We also record the training start age for each dog.
 df <- df %>%
-  mutate(train_start_mode = as.factor(ifelse(
+  mutate(train_start_age = ordered(ifelse(
     train_age == "" | train_age == "I don't know", NA, ifelse(
       train_1_3_mo == TRUE, '1-3 mo', ifelse(
-        train_4_mo == TRUE, '4 mo', '5-6 mo')))))
+        train_4_mo == TRUE, '4 mo', '5-6 mo'))),
+    levels=c('1-3 mo', '4 mo', '5-6 mo')))
 
 # Convert training technique to reward or punishment.
 df$train_technique <- ifelse(
@@ -264,7 +265,8 @@ df <- subset(df, select=-c(
   at_least_1yo, # survey software logic variable
   sex, # replaced with a male column
   restr_device, # devices moved into their own columns
-  no_devices # mirrors the device_used column
+  no_devices, # mirrors the device_used column
+  train_age # replaced with extracted start age and age range columns
   ))
 ```
 
