@@ -64,7 +64,7 @@ necessary adjustments.
 ```{r}
 print('Training techniques:')
 summary(df$train_technique)
-cnt <- count(df$train_technique)[2,2]
+cnt <- summary(df$train_technique)[2]
 
 df <- df %>%
   mutate(adj_train_technique = factor(ifelse(
@@ -75,7 +75,7 @@ df <- df %>%
 print('Training techniques (adjusted):')
 summary(df$adj_train_technique)
 
-diff <- cnt - count(df$adj_train_technique)[2,2]
+diff <- cnt - summary(df$adj_train_technique)[2]
 print(paste('Delta:', diff))
 ```
 
@@ -128,7 +128,7 @@ df <- df %>%
     | house_soiling | rep_materials | hyperactive | destructive | escape
     | mounting, TRUE, FALSE))
 
-count(df$behav_problem)
+summary(df$behav_problem)
 ```
 
 # Basic Exploration
