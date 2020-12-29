@@ -139,6 +139,20 @@ Let's take a look at the data set as we head toward analysis.
 summary(df)
 ```
 
+Notable observations:
+
+* Median dog age is 7 yrs (range: 1 to 19 yrs).
+* A majority (87.1%) of dogs were neutered.
+* The gender split is nearly even with 48.6% males.
+* About half of the dogs (48.3%) attended training at 6 months or earlier.
+  * TODO: add observations about training columns.
+* A vast majority of dogs (99.3%) were reported to exhibit at least one type of
+problematic behavior.
+  * The top 3 most frequent behavior problems were fear/anxiety, aggression, and
+  rolling in repulsive materials.
+  * The 3 least frequent behavior problems were hyperactivity, destruction, and
+  mounting.
+
 We create pairwise scatter plots for columns that all participants were
 presented (i.e., no NA responses) and we exclude the individual behavior problem
 columns for brevity.
