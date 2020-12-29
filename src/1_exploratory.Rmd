@@ -206,6 +206,43 @@ ggarrange(plotlist=plot_list, ncol=4, nrow=5, common.legend=TRUE,
           legend="bottom")
 ```
 
+# Exploring Trends and Relationships
+
+We are investigating whether or not taking a puppy to training within the first
+six months has an effect on their overall outcome. So we start by visualizing
+the difference between attending and not attending puppy training for each
+attribute and outcome variable. We look at the attributes to see how fairly the
+two groups are split. We look at the outcomes to see if a visually distinct
+effect.
+
+```{r}
+# Generate plots for each attribute split by a simple predictor.
+pred <- 'train_6mo_or_less'
+attribs <- c(
+  'age_yrs',
+  'male',
+  'neutered',
+  'train_age',
+  'train_technique',
+  'train_class_count'
+)
+attribs <- sort(attribs)
+
+plot_list <- list()
+for (i in 1:length(attribs)) {
+  p <- ggplot(df, aes_string(x=attribs[i], fill=pred)) +
+    geom_bar() +
+    theme(legend.position="none")
+  plot_list[[i]] <- p
+}
+ggarrange(plotlist=plot_list, ncol=3, nrow=2, common.legend=TRUE,
+          legend="bottom")
+```
+
+In the plots above the value of "NA" for the training age corresponds to (1) the
+dog did not attend puppy training or (2) the owner was not sure if the dog
+attended puppy training.
+
 # Saving the Exploratory Data
 
 Save the data to a file in RDS format so that the data types are saved and so
