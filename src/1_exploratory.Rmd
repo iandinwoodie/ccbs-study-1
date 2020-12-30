@@ -252,9 +252,8 @@ ggarrange(plotlist=plot_list, ncol=4, nrow=5)
 
 ### Dependent Variables
 
-```{r, fig.height=5, fig.width=5}
-vars <- c(
-  'behav_problem',
+```{r, fig.height=4, fig.width=5}
+outcomes <- c(
   'aggression',
   'fear_anxiety',
   'jumping',
@@ -270,8 +269,8 @@ vars <- c(
 )
 
 plot_list <- list()
-for (i in 1:length(vars)) {
-  col <- vars[i]
+for (i in 1:length(outcomes)) {
+  col <- outcomes[i]
   p <- df %>%
     select(col) %>%
     drop_na(col) %>%
@@ -279,40 +278,51 @@ for (i in 1:length(vars)) {
     geom_bar(fill='steelblue')
   plot_list[[i]] <- p
 }
-ggarrange(plotlist=plot_list, ncol=4, nrow=4)
+ggarrange(plotlist=plot_list, ncol=4, nrow=3)
 ```
 
 # Exploring Trends and Relationships
 
-We are investigating whether or not taking a puppy to training within the first
-six months has an effect on their overall outcome. So we start by visualizing
-the difference between attending and not attending puppy training for each
-attribute and outcome variable. We look at the attributes to see how fairly the
-two groups are split. We look at the outcomes to see if a visually distinct
-effect.
+## Control vs Experimental Group
 
-```{r}
+Our control group consists of the dogs who did not attend puppy training and our
+experimental group consists of those who did. Let's look at the variables common
+to both groups with the plot color indicating the presence of a behavior
+problem. Since we know a vast majority of dogs have at least one behavior
+problem, we need to look for trends in individual behavior problems for the
+plots to be useful.
+
+```{r, fig.height=10, fig.width=5}
 # Generate plots for each attribute split by a simple predictor.
 pred <- 'train_6mo_or_less'
 attribs <- c(
+  'acq_12_wo_or_less',
   'age_yrs',
   'male',
-  'neutered',
-  'train_age',
-  'train_technique',
-  'train_class_count'
+  'neutered'
 )
 attribs <- sort(attribs)
+outcomes <- sort(outcomes)
 
 plot_list <- list()
-for (i in 1:length(attribs)) {
-  p <- ggplot(df, aes_string(x=attribs[i], fill=pred)) +
-    geom_bar() +
-    theme(legend.position="none")
-  plot_list[[i]] <- p
+cnt <- 1
+labels <- NULL
+for (i in 1:length(outcomes)) {
+  outcome <- outcomes[i]
+  for (j in 1:length(attribs)) {
+    attrib <- attribs[j]
+    p <- df %>%
+      select(attrib, outcome) %>%
+      ggplot(aes_string(x=attrib, fill=outcome)) +
+      geom_bar() +
+      theme(legend.position='none')
+    plot_list[[cnt]] <- p
+    cnt <- cnt + 1
+    labels <- c(labels, outcome)
+  }
 }
-ggarrange(plotlist=plot_list, ncol=3, nrow=2, common.legend=TRUE,
-          legend="bottom")
+ggarrange(plotlist=plot_list, ncol=4, nrow=12, common.legend=TRUE,
+          legend='bottom', labels=labels)
 ```
 
 In the plots above the value of "NA" for the training age corresponds to (1) the
