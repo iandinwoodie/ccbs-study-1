@@ -296,7 +296,7 @@ for (i in 1:length(outcomes)) {
       select(attrib, outcome) %>%
       ggplot(aes_string(x=attrib, fill=outcome)) +
       geom_bar(position = position_dodge(0.9)) +
-      labs(fill='behav. problem (corresp. to row)') +
+      labs(fill='has this behavoior problem') +
       theme(legend.position='none')
     plot_list[[cnt]] <- p
     cnt <- cnt + 1
@@ -330,7 +330,7 @@ for (i in 1:length(outcomes)) {
       select(attrib, outcome) %>%
       ggplot(aes_string(x=attrib, fill=outcome)) +
       geom_bar(position = position_dodge(0.9)) +
-      labs(fill='behav. problem (corresp. to row)') +
+      labs(fill='has this behavoior problem') +
       theme(legend.position='none')
     plot_list[[cnt]] <- p
     cnt <- cnt + 1
