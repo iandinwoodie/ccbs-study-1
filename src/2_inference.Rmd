@@ -199,6 +199,7 @@ We want to answer the following questions about the training:
 month period?
 - Did training technique (reward vs. punishment) have an impact on the
 outcome?
+- Did the number of sessions have an impact on the outcome?
 - Did the choice of restraining device have an impact on the outcome?
 
 We will need to expand the independent variables used for the model to answer
@@ -224,7 +225,8 @@ training_params <- c(
   'train_1_3_mo',
   'train_4_mo',
   'train_5_6_mo',
-  'reward'
+  'reward',
+  'train_class_count'
 )
 glm_attribs <- c(
   glm_attribs,
