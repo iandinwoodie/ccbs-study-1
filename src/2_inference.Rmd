@@ -135,7 +135,36 @@ for (outcome in outcomes) {
 }
 ```
 
-# Determining Key Training Parameters
+# Investigating Training Specifics
 
 At this point we have identified that puppy training has a significant impact on
-certain 
+certain behavior problems. Now we want to investigate the impact of certain
+training factors.
+
+## Isolating the Experimental Data Set
+
+First, we isolate the experimental group (those who attended puppy training) in
+to their own data set.
+
+```{r}
+df_exp <- df %>%
+  filter(train_6mo_or_less == TRUE)
+summary(df_exp)
+```
+
+## Binary Logistic Regression
+
+We want to answer the following questions about the training:
+
+- Did training in the 1-3 month period produce a better outcome than the 4-6
+month period?
+- Did training technique (reward vs. punishment) have an impact on the
+outcome?
+- Did the choice of restraining device have an impact on the outcome?
+
+### Preparation
+
+# TODOS
+
+TODO: Were younger dogs more likely (with statistical significance) to attend more sessions?
+
