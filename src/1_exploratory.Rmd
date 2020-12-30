@@ -86,8 +86,8 @@ Notable observations:
     to reward based training; a 25.1% difference!
 * A vast majority of dogs (99.3%) were reported to exhibit at least one type of
 problematic behavior.
-  * The top 3 most frequent behavior problems were fear/anxiety, aggression, and
-  rolling in repulsive materials.
+  * The top 3 most frequent behavior problems were house soiling, fear/anxiety,
+  aggression.
   * The 3 least frequent behavior problems were hyperactivity, destruction, and
   mounting.
 
