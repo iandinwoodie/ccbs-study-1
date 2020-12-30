@@ -343,7 +343,7 @@ ggarrange(plotlist=plot_list, ncol=4, nrow=12, common.legend=TRUE,
 
 Last, we look at the impact of punishing restraining devices.
 
-```{r, fig.height=12, fig.width=10}
+```{r, fig.height=10, fig.width=5}
 attribs <- c(
   'martingale',
   'slip_collar',
@@ -351,4 +351,27 @@ attribs <- c(
   'choke_collar',
   'prong_collar'
 )
+attribs <- sort(attribs)
+
+plot_list <- list()
+cnt <- 1
+labels <- NULL
+for (i in 1:length(outcomes)) {
+  outcome <- outcomes[i]
+  for (j in 1:length(attribs)) {
+    attrib <- attribs[j]
+    p <- df %>%
+      drop_na(attrib) %>%
+      select(attrib, outcome) %>%
+      ggplot(aes_string(x=attrib, fill=outcome)) +
+      geom_bar(position = position_dodge(0.9)) +
+      labs(fill='has this behavoior problem') +
+      theme(legend.position='none')
+    plot_list[[cnt]] <- p
+    cnt <- cnt + 1
+    labels <- c(labels, outcome)
+  }
+}
+ggarrange(plotlist=plot_list, ncol=5, nrow=12, common.legend=TRUE,
+          font.label=list(size=10), vjust=0.75, legend='bottom', labels=labels)
 ```
