@@ -18,7 +18,7 @@ Load the raw data and verify its dimensions and structure.
 ```{r}
 df <- readRDS('../data/tidy.Rds')
 dim(df)
-str(df)
+summary(df)
 ```
 
 # Control vs Experimental Group
