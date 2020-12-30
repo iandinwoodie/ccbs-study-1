@@ -260,6 +260,53 @@ the top left corner. The left facet is the group of dogs without the behavior
 problem and the right are the dogs with the behavior problem. Within each facet
 the color indicates control (red) or experiment (blue) grouping.
 
+## Within the Experimental Group
+
+Within the experimental group we are curious to see the impact of various
+training techniques and restrain devices on behavior problem occurrence. We
+start by isolating the experimental group.
+
+```{r}
+df_exp <- df %>%
+  filter(train_6mo_or_less == TRUE)
+summary(df_exp)
+```
+
+Now we look at the impact of training age and frequency.
+
+```{r, fig.height=10, fig.width=5}
+attribs <- c(
+  'train_1_3_mo',
+  'train_4_mo',
+  'train_5_6_mo',
+  'train_start_age',
+  'adj_train_technique'
+)
+attribs <- sort(attribs)
+
+plot_list <- list()
+cnt <- 1
+labels <- NULL
+for (i in 1:length(outcomes)) {
+  outcome <- outcomes[i]
+  for (j in 1:length(attribs)) {
+    attrib <- attribs[j]
+    p <- df %>%
+      drop_na(attrib) %>%
+      select(attrib, outcome) %>%
+      ggplot(aes_string(x=attrib, fill=outcome)) +
+      geom_bar(position = position_dodge(0.9)) +
+      labs(fill='behav. problem (corresp. to row)') +
+      theme(legend.position='none')
+    plot_list[[cnt]] <- p
+    cnt <- cnt + 1
+    labels <- c(labels, outcome)
+  }
+}
+ggarrange(plotlist=plot_list, ncol=5, nrow=12, common.legend=TRUE,
+          font.label=list(size=10), vjust=0.75, legend='bottom', labels=labels)
+```
+
 # Saving the Exploratory Data
 
 Save the data to a file in RDS format so that the data types are saved and so
