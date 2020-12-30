@@ -306,3 +306,49 @@ for (i in 1:length(outcomes)) {
 ggarrange(plotlist=plot_list, ncol=5, nrow=12, common.legend=TRUE,
           font.label=list(size=10), vjust=0.75, legend='bottom', labels=labels)
 ```
+Next, we try to visual the impact (if any) of a non-punishing restraining device
+choice. We also include the overall `device_used` column to see if there is a
+trend observed for restraining devices as a whole.
+
+```{r, fig.height=10, fig.width=5}
+attribs <- c(
+  'device_used',
+  'buckle_collar',
+  'harness',
+  'head_halter'
+)
+
+plot_list <- list()
+cnt <- 1
+labels <- NULL
+for (i in 1:length(outcomes)) {
+  outcome <- outcomes[i]
+  for (j in 1:length(attribs)) {
+    attrib <- attribs[j]
+    p <- df %>%
+      drop_na(attrib) %>%
+      select(attrib, outcome) %>%
+      ggplot(aes_string(x=attrib, fill=outcome)) +
+      geom_bar(position = position_dodge(0.9)) +
+      labs(fill='behav. problem (corresp. to row)') +
+      theme(legend.position='none')
+    plot_list[[cnt]] <- p
+    cnt <- cnt + 1
+    labels <- c(labels, outcome)
+  }
+}
+ggarrange(plotlist=plot_list, ncol=4, nrow=12, common.legend=TRUE,
+          font.label=list(size=10), vjust=0.75, legend='bottom', labels=labels)
+```
+
+Last, we look at the impact of punishing restraining devices.
+
+```{r, fig.height=12, fig.width=10}
+attribs <- c(
+  'martingale',
+  'slip_collar',
+  'shock_collar',
+  'choke_collar',
+  'prong_collar'
+)
+```
