@@ -246,6 +246,11 @@ for (outcome in outcomes) {
   df_tmp <- df[,c(outcome, glm_attribs)]
   df_tmp <- apply_min_xtab(df_tmp, outcome)
   
+  # If necessary, drop columns due to separability problems.
+  if (outcome == 'destructive') {
+    df_tmp <- subset(df_tmp, select=-c(shock_collar))
+  }
+  
   glm_fit <- glm(f, data=df_tmp, family='binomial')
   print(summary(glm_fit))
   print(exp(cbind(OR=coef(glm_fit), suppressMessages(confint(glm_fit)))))
