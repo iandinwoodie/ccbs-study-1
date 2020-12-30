@@ -191,7 +191,7 @@ equivalent.
 The age of the dog is the only continuous variable we are working with.
 
 ```{r}
-ggplot(df, aes(age_yrs)) + geom_bar()
+ggplot(df, aes(age_yrs)) + geom_bar(fill='steelblue')
 skewness(df$age_yrs)
 ```
 
@@ -201,7 +201,7 @@ transform.
 ```{r}
 df <- df %>%
   mutate(log_age_yrs = log(age_yrs))
-ggplot(df, aes(log_age_yrs)) + geom_bar()
+ggplot(df, aes(log_age_yrs)) + geom_bar(fill='steelblue')
 skewness(df$log_age_yrs)
 
 df <- subset(df, select=-c(log_age_yrs))
