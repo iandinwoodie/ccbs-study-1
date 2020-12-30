@@ -262,8 +262,24 @@ for (outcome in outcomes) {
 }
 ```
 
-# TODOS
+## Trends in Training Attendance
 
-- Were younger dogs more likely (with statistical significance) to attend more sessions?
+In our exploratory data analysis we saw a trend that seemed to indicate that
+younger dogs were more likely to have attended puppy training than older dogs.
+If true, this would seem to suggest that puppy training is becoming more
+popular over time. To start, we introduce the question to be answered:
+
+- Were younger dogs more likely to attend more sessions?
+
+To answer this, we build a regression model where the predictor is the dog's age
+and the outcome is whether or not they attended puppy training.
+
+```{r}
+glm_fit <- glm(train_6mo_or_less~age_yrs, data=df, family='binomial')
+summary(glm_fit)
+print(exp(cbind(OR=coef(glm_fit), suppressMessages(confint(glm_fit)))))
+```
+
+
 
 
