@@ -220,13 +220,16 @@ devices <- c(
   'choke_collar',
   'prong_collar'
 )
-glm_attribs <- c(
-  glm_attribs,
-  devices,
+training_params <- c(
   'train_1_3_mo',
   'train_4_mo',
   'train_5_6_mo',
   'reward'
+)
+glm_attribs <- c(
+  glm_attribs,
+  devices,
+  training_params
 )
 
 print(glm_attribs)
