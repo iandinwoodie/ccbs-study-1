@@ -23,78 +23,7 @@ dim(df)
 str(df)
 ```
 
-# Accounting for the Human-Factor
-
-## Training Methods
-
-It is possible that the training technique that participants have reported
-(e.g., reward-based training) is at odds with the training devices that were
-employed.
-
-```{r}
-devices <- c(
-  'buckle_collar',
-  'martingale',
-  'slip_collar',
-  'shock_collar',
-  'harness',
-  'head_halter',
-  'choke_collar',
-  'prong_collar'
-)
-
-plot_list <- list()
-for (i in 1:length(devices)) {
-  p <- ggplot(data=subset(df, !is.na(train_technique)),
-              aes_string(x=devices[i],fill='train_technique')) +
-    geom_bar() +
-    theme(legend.position="none")
-  plot_list[[i]] <- p
-}
-ggarrange(plotlist=plot_list, ncol=3, nrow=3, common.legend=TRUE,
-          legend="bottom")
-```
-
-The plot of the martingale usage is a good example of the anticipated trend:
-several participants using a punishment-based device have indicated reward-based
-training. Let's calculate the number of dogs subjected to a punishing device
-when their owner believed they were using reward based training and apply the
-necessary adjustments.
-
-```{r}
-print('Training techniques:')
-summary(df$train_technique)
-cnt <- summary(df$train_technique)[2]
-
-df <- df %>%
-  mutate(adj_train_technique = factor(ifelse(
-    is.na(train_technique), NA, ifelse(
-      martingale | slip_collar | shock_collar | choke_collar | prong_collar,
-      'punish', 'reward'))))
-
-print('Training techniques (adjusted):')
-summary(df$adj_train_technique)
-
-diff <- cnt - summary(df$adj_train_technique)[2]
-print(paste('Delta:', diff))
-```
-
-Let's reconstruct the plot above to visually see the adjustment.
-
-```{r}
-plot_list <- list()
-for (i in 1:length(devices)) {
-  p <- ggplot(data=subset(df, !is.na(adj_train_technique)),
-              aes_string(x=devices[i],fill='adj_train_technique')) +
-    geom_bar() +
-    theme(legend.position="none")
-  plot_list[[i]] <- p
-}
-ggarrange(plotlist=plot_list, ncol=3, nrow=3, common.legend=TRUE,
-          legend="bottom")
-```
-We can see that the employment of a device that punishes is reflected in the
-training technique.
+# Basic Exploration
 
 ## Owner Identifier
 
@@ -117,8 +46,6 @@ drop the column to simply the data set.
 ```{r}
 df <- subset(df, select=-c(owner_id))
 ```
-
-# Basic Exploration
 
 ## Overview of Data Set
 
