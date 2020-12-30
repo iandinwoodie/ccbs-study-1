@@ -116,7 +116,38 @@ Let's consider what factors may also come in to play:
 - Age
 - Sex
 - Neuter status
-- Acquistion of the dog at 12 w.o. or less
+- Acquisition of the dog at 12 w.o. or less
+
+We'll perform logistic regression to determine the impact of these factors. To
+perform logistic regression we'll need to ensure out data subsets have enough
+responses (`n >= 10`) for each possible answer to be included in the model.
+
+```{r}
+apply_min_xtab <- function(df, outcome, cutoff=10)
+{
+  drops <- NULL
+  for (col in names(df)) {
+    if (col == outcome) next
+    if (is.integer(df[,col])) next
+    
+    xtab <- table(df[,col], df[,outcome])
+    if (min(xtab) < cutoff) {
+      drops <- c(drops, col)
+      break
+    }
+  }
+  
+  if (length(drops) > 0) {
+    cat('\nDropped from model due to insufficient responses:\n')
+    cat(drops)
+    cat('\n')
+  }
+  
+  return(df[, !(names(df) %in% drops)])
+}
+```
+
+Now we perform the logistic regression.
 
 ```{r}
 pred <- 'train_6mo_or_less'
@@ -130,7 +161,11 @@ for (outcome in outcomes) {
   cat(paste(replicate(80, '-'), collapse=''))
   cat(paste0('\n', outcome, '\n'))
   f <- as.formula(paste0(outcome, '~', '.'))
-  glm_fit <- glm(f, data=df[,c(outcome, pred, glm_attribs)], family='binomial')
+  
+  df_tmp <- df[,c(outcome, pred, glm_attribs)]
+  df_tmp <- apply_min_xtab(df_tmp, outcome)
+  
+  glm_fit <- glm(f, data=df_tmp, family='binomial')
   print(summary(glm_fit))
   print(exp(cbind(OR=coef(glm_fit), suppressMessages(confint(glm_fit)))))
   cat('\nVIF:\n')
@@ -170,12 +205,30 @@ We will need to expand the independent variables used for the model to answer
 these questions.
 
 ```{r}
+df <- df %>%
+  mutate(reward = ifelse(
+    is.na(train_technique), NA, ifelse(
+      train_technique == 'reward', TRUE, FALSE)))
+
+devices <- c(
+  'buckle_collar',
+  'martingale',
+  'slip_collar',
+  'shock_collar',
+  'harness',
+  'head_halter',
+  'choke_collar',
+  'prong_collar'
+)
 glm_attribs <- c(
   glm_attribs,
+  devices,
   'train_1_3_mo',
-  'train_technique',
-  'device_used'
+  'train_4_mo',
+  'train_5_6_mo',
+  'reward'
 )
+
 print(glm_attribs)
 ```
 
@@ -186,7 +239,11 @@ for (outcome in outcomes) {
   cat(paste(replicate(80, '-'), collapse=''))
   cat(paste0('\n', outcome, '\n'))
   f <- as.formula(paste0(outcome, '~', '.'))
-  glm_fit <- glm(f, data=df[,c(outcome, glm_attribs)], family='binomial')
+  
+  df_tmp <- df[,c(outcome, glm_attribs)]
+  df_tmp <- apply_min_xtab(df_tmp, outcome)
+  
+  glm_fit <- glm(f, data=df_tmp, family='binomial')
   print(summary(glm_fit))
   print(exp(cbind(OR=coef(glm_fit), suppressMessages(confint(glm_fit)))))
   cat('\nVIF:\n')

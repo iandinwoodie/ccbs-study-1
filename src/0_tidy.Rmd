@@ -290,7 +290,10 @@ df <- df %>%
   mutate(adj_train_technique = factor(ifelse(
     is.na(train_technique), NA, ifelse(
       martingale | slip_collar | shock_collar | choke_collar | prong_collar,
-      'punish', 'reward'))))
+      'punish', 'reward')))) %>%
+  mutate(punish_device = factor(ifelse(
+    martingale | slip_collar | shock_collar | choke_collar | prong_collar, TRUE,
+    FALSE)))
 
 print('Training techniques (adjusted):')
 summary(df$adj_train_technique)
