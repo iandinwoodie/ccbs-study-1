@@ -58,6 +58,7 @@ outcomes <- c(
   'escape',
   'mounting'
 )
+outcomes <- sort(outcomes)
 ```
 
 ## Fischer Exact
@@ -103,4 +104,35 @@ add_sig_columns <- function(df) {
 df_out <- add_sig_columns(df_out)
 print(knitr::kable(df_out))
 ```
+
+So we see that there appears to be an impact from the puppy training, but this
+fails to account for other factors that might be at play.
+
+## Binary Logistic Regression
+
+Let's consider what factors may also come in to play:
+
+- Age
+- Sex
+- Neuter status
+
+```{r}
+pred <- 'train_6mo_or_less'
+glm_attribs <- c(
+  'age_yrs',
+  'male',
+  'neutered'
+)
+for (outcome in outcomes) {
+  print(paste(replicate(80, '-'), collapse=''))
+  print(outcome)
+  f <- as.formula(paste0(outcome, '~', '.'))
+  glm_fit <- glm(f, data=df[,c(outcome, pred, glm_attribs)], family='binomial')
+  print(summary(glm_fit))
+  print(exp(cbind(OR=coef(glm_fit), suppressMessages(confint(glm_fit)))))
+}
 ```
+
+# Determining Key Training Parameters
+
+At this point we have iden
