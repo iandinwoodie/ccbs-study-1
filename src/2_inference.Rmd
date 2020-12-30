@@ -271,6 +271,8 @@ popular over time. To start, we introduce the question to be answered:
 
 - Were younger dogs more likely to attend more sessions?
 
+## Binomial Logistic Regression
+
 To answer this, we build a regression model where the predictor is the dog's age
 and the outcome is whether or not they attended puppy training.
 
@@ -280,6 +282,25 @@ summary(glm_fit)
 print(exp(cbind(OR=coef(glm_fit), suppressMessages(confint(glm_fit)))))
 ```
 
+## Visualizing the Trend
 
+This seems like a trend that would convey well in a visualization. Factors plot
+poorly, so let's generate a simplified data frame that consists of two columns:
+(1) age in years and (2) the liklihood of puppy training attendance.
+
+```{r}
+age_prob_vector <- NULL
+max_age <- max(df$age_yrs)
+for (i in 1:max_age) {
+  df_tmp <- df %>%
+    filter(age_yrs == i) %>%
+    select(train_6mo_or_less)
+  p <- sum(df_tmp$train_6mo_or_less)/length(df_tmp$train_6mo_or_less)
+  age_prob_vector <- c(age_prob_vector, p)
+}
+
+df_age <- data.frame(age=c(1:max_age), attendance=age_prob_vector)
+head(df_age)
+```
 
 
