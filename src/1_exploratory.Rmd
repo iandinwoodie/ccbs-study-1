@@ -1,5 +1,5 @@
 ---
-title: "Building Tidy Data"
+title: "Exploratory Data Analysis"
 author: "Ian Dinwoodie"
 date: "`r Sys.Date()`"
 output: html_document
