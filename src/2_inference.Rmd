@@ -115,13 +115,15 @@ Let's consider what factors may also come in to play:
 - Age
 - Sex
 - Neuter status
+- Acquistion of the dog at 12 w.o. or less
 
 ```{r}
 pred <- 'train_6mo_or_less'
 glm_attribs <- c(
   'age_yrs',
   'male',
-  'neutered'
+  'neutered',
+  'acq_12_wo_or_less'
 )
 for (outcome in outcomes) {
   print(paste(replicate(80, '-'), collapse=''))
@@ -135,4 +137,5 @@ for (outcome in outcomes) {
 
 # Determining Key Training Parameters
 
-At this point we have iden
+At this point we have identified that puppy training has a significant impact on
+certain 
