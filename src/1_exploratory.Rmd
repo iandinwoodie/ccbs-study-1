@@ -312,22 +312,20 @@ for (i in 1:length(outcomes)) {
   for (j in 1:length(attribs)) {
     attrib <- attribs[j]
     p <- df %>%
-      select(attrib, outcome) %>%
+      select(attrib, outcome, pred) %>%
       ggplot(aes_string(x=attrib, fill=outcome)) +
       geom_bar() +
-      theme(legend.position='none')
+      theme(legend.position='none') +
+      facet_grid(. ~ train_6mo_or_less)
     plot_list[[cnt]] <- p
     cnt <- cnt + 1
     labels <- c(labels, outcome)
   }
 }
 ggarrange(plotlist=plot_list, ncol=4, nrow=12, common.legend=TRUE,
-          legend='bottom', labels=labels)
+          font.label=list(size=10), vjust=0.75, legend='bottom', labels=labels)
 ```
 
-In the plots above the value of "NA" for the training age corresponds to (1) the
-dog did not attend puppy training or (2) the owner was not sure if the dog
-attended puppy training.
 
 # Saving the Exploratory Data
 
