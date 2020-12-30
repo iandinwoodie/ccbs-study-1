@@ -1,0 +1,105 @@
+---
+title: "Inferential Data Analysis"
+author: "Ian Dinwoodie"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo=TRUE)
+```
+
+# Loading the Data
+
+Load the raw data and verify its dimensions and structure.
+
+```{r}
+df <- readRDS('../data/tidy.Rds')
+dim(df)
+str(df)
+```
+
+# Control vs Experimental Group
+
+## Overview
+
+The first question we wanted to answer was if training at a young age (i.e.,
+puppy training) would have an impact on the likelihood of a dog having certain
+behavior problems. The behavior problems we are exploring are:
+
+- Aggression
+- Barking (excessively)
+- Compulsion
+- Coprophagia
+- Destructive behavior
+- Escaping/running away
+- Fear/anxiety
+- House soiling
+- Hyperactivity/overactivity
+- Mounting
+- Problematic jumping
+- Rolling in repulsive materials
+
+We initialize a vector to hold these outcomes.
+
+```{r}
+outcomes <- c(
+  'aggression',
+  'fear_anxiety',
+  'jumping',
+  'barking',
+  'coprophagia',
+  'compulsion',
+  'house_soiling',
+  'rep_materials',
+  'hyperactive',
+  'destructive',
+  'escape',
+  'mounting'
+)
+```
+
+## Fischer Exact
+
+We check for correlation between the predictor (attending puppy training) and
+each outcome (the presence of a specific behavior problem). Here we perform the
+Fisher Exact test with a Benjamini-Hochberg correction.
+
+```{r}
+pred <- 'train_6mo_or_less'
+
+idx <- NULL
+p_values <- NULL
+odds_ratios <- NULL 
+for (outcome in outcomes) {
+  tbl <- table(df[, pred], df[, outcome], dnn=c(pred, outcome))
+  fisher <- fisher.test(tbl)
+  idx <- c(idx, outcome)
+  p_values <- c(p_values, fisher$p.value)
+  print(p_values)
+  odds_ratios <- c(odds_ratios, fisher$estimate[[1]])
+}
+
+# Correct for the possibility of Type I errors.
+p_values <- p.adjust(p_values, method='BH')
+
+# Form a result data frame.
+df_out <- data.frame(outcome=idx, p_value=p_values,
+                     odds_ratio=odds_ratios)
+
+add_sig_columns <- function(df) {
+  df$level <- ''
+  df[df$p_value <= .05, 'level'] <- '*'
+  df[df$p_value <= .01, 'level'] <- '**'
+  df[df$p_value <= .001, 'level'] <- '***'
+  
+  df$dir <- ''
+  df[df$odds_ratio < 1, 'dir'] <- '-'
+  df[df$odds_ratio > 1, 'dir'] <- '+'
+}
+
+df_out <- add_sig_columns(df_out)
+print(knitr::kable(df_out))
+```
+```
