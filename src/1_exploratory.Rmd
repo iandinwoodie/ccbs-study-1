@@ -215,7 +215,7 @@ the transformed column and rely on the original.
 ### Independent Variables
 
 ```{r, fig.height=5, fig.width=5}
-discrete_iv <- c(
+vars <- c(
   'acq_12_wo_or_less',
   'neutered',
   'train_6mo_or_less',
@@ -238,8 +238,8 @@ discrete_iv <- c(
 )
 
 plot_list <- list()
-for (i in 1:length(discrete_iv)) {
-  col <- discrete_iv[i]
+for (i in 1:length(vars)) {
+  col <- vars[i]
   p <- df %>%
     select(col) %>%
     drop_na(col) %>%
@@ -253,11 +253,7 @@ ggarrange(plotlist=plot_list, ncol=4, nrow=5)
 ### Dependent Variables
 
 ```{r, fig.height=5, fig.width=5}
-discrete <- c(
-  'acq_12_wo_or_less',
-  'neutered',
-  'train_6mo_or_less',
-  'male',
+vars <- c(
   'behav_problem',
   'aggression',
   'fear_anxiety',
@@ -274,14 +270,16 @@ discrete <- c(
 )
 
 plot_list <- list()
-for (i in 1:length(discrete)) {
-  p <- ggplot(df, aes_string(x=discrete[i])) +
-    geom_bar() +
-    theme(legend.position="none")
+for (i in 1:length(vars)) {
+  col <- vars[i]
+  p <- df %>%
+    select(col) %>%
+    drop_na(col) %>%
+    ggplot(aes_string(x = col)) +
+    geom_bar(fill='steelblue')
   plot_list[[i]] <- p
 }
-ggarrange(plotlist=plot_list, ncol=4, nrow=5, common.legend=TRUE,
-          legend="bottom")
+ggarrange(plotlist=plot_list, ncol=4, nrow=4)
 ```
 
 # Exploring Trends and Relationships
