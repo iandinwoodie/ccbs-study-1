@@ -312,11 +312,13 @@ for (i in 1:length(outcomes)) {
   for (j in 1:length(attribs)) {
     attrib <- attribs[j]
     p <- df %>%
+      drop_na(attrib) %>%
       select(attrib, outcome, pred) %>%
-      ggplot(aes_string(x=attrib, fill=outcome)) +
-      geom_bar() +
+      ggplot(aes_string(x=attrib, fill=pred)) +
+      geom_bar(position = position_dodge(0.9)) +
+      labs(fill=pred) +
       theme(legend.position='none') +
-      facet_grid(. ~ train_6mo_or_less)
+      facet_grid(as.formula(paste0('.~', outcome)))
     plot_list[[cnt]] <- p
     cnt <- cnt + 1
     labels <- c(labels, outcome)
@@ -326,6 +328,10 @@ ggarrange(plotlist=plot_list, ncol=4, nrow=12, common.legend=TRUE,
           font.label=list(size=10), vjust=0.75, legend='bottom', labels=labels)
 ```
 
+> Note: For each single plot the behavior problem is indicated by the label in
+the top left corner. The left facet is the group of dogs without the behavior
+problem and the right are the dogs with the behavior problem. Within each facet
+the color indicates control (red) or experiment (blue) grouping.
 
 # Saving the Exploratory Data
 
