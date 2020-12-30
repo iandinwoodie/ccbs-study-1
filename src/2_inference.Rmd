@@ -166,7 +166,34 @@ month period?
 outcome?
 - Did the choice of restraining device have an impact on the outcome?
 
-### Preparation
+We will need to expand the independent variables used for the model to answer
+these questions.
+
+```{r}
+glm_attribs <- c(
+  glm_attribs,
+  'train_1_3_mo',
+  'train_technique',
+  'device_used'
+)
+print(glm_attribs)
+```
+
+Now we can build an evaluate our models for the various outcomes.
+
+```{r}
+for (outcome in outcomes) {
+  cat(paste(replicate(80, '-'), collapse=''))
+  cat(paste0('\n', outcome, '\n'))
+  f <- as.formula(paste0(outcome, '~', '.'))
+  glm_fit <- glm(f, data=df[,c(outcome, glm_attribs)], family='binomial')
+  print(summary(glm_fit))
+  print(exp(cbind(OR=coef(glm_fit), suppressMessages(confint(glm_fit)))))
+  cat('\nVIF:\n')
+  print(car::vif(glm_fit))
+  cat('\n')
+}
+```
 
 # TODOS
 
