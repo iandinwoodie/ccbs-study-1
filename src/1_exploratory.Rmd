@@ -180,6 +180,12 @@ df %>%
   theme(legend.position='bottom')
 ```
 
+Our control group consists of the dogs that did not attend puppy training. We
+can compare variable distributions across the experimental and control groups by
+looking at the graphs along the `train_6mo_or_less` row. Thankfully, we see that
+the distributions between the two groups for the plotted columns are roughly
+equivalent.
+
 ## Continuous Variables
 
 The age of the dog is the only continuous variable we are working with.
