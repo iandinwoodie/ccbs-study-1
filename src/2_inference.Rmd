@@ -77,7 +77,6 @@ for (outcome in outcomes) {
   fisher <- fisher.test(tbl)
   idx <- c(idx, outcome)
   p_values <- c(p_values, fisher$p.value)
-  print(p_values)
   odds_ratios <- c(odds_ratios, fisher$estimate[[1]])
 }
 
@@ -97,6 +96,8 @@ add_sig_columns <- function(df) {
   df$dir <- ''
   df[df$odds_ratio < 1, 'dir'] <- '-'
   df[df$odds_ratio > 1, 'dir'] <- '+'
+  
+  return (df)
 }
 
 df_out <- add_sig_columns(df_out)
