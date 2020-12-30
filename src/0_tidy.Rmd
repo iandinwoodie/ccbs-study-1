@@ -168,7 +168,10 @@ It's clear that some factor columns can be converted to boolean (i.e., logical).
 ```{r}
 df <- df %>%
   mutate(at_least_1yo = ifelse(at_least_1yo == 'Yes', TRUE, FALSE)) %>%
-  mutate(neutered = ifelse(neutered == 'Yes', TRUE, FALSE))
+  mutate(neutered = ifelse(neutered == 'Yes', TRUE, FALSE)) %>%
+  mutate(acq_12_wo_or_less = ifelse(
+    acq_12_wo_or_less == "I don't know", NA, ifelse(
+      acq_12_wo_or_less == 'Yes', TRUE, FALSE)))
 ```
 
 # Deriving Columns
