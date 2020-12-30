@@ -306,12 +306,3 @@ for (i in 1:length(outcomes)) {
 ggarrange(plotlist=plot_list, ncol=5, nrow=12, common.legend=TRUE,
           font.label=list(size=10), vjust=0.75, legend='bottom', labels=labels)
 ```
-
-# Saving the Exploratory Data
-
-Save the data to a file in RDS format so that the data types are saved and so
-that the output is compressed.
-
-```{r}
-saveRDS(df, '../data/exploratory.Rds')
-```
