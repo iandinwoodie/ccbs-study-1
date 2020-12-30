@@ -172,7 +172,12 @@ columns for brevity.
 df %>%
   ggpairs(columns=c('acq_12_wo_or_less', 'age_yrs', 'neutered',
                     'train_6mo_or_less', 'male'),
-          progress=FALSE, aes(color=behav_problem))
+          mapping=ggplot2::aes(color=behav_problem),
+          diag=list(discrete='barDiag',
+                    continuous=wrap('densityDiag', alpha=0.5)),
+          legend=1,
+          progress=FALSE) +
+  theme(legend.position='bottom')
 ```
 
 ## Continuous Variables
