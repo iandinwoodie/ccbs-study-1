@@ -216,7 +216,7 @@ It's common to want to know the split of neuter status by sex, so let's generate
 those numbers now.
 
 ```{r}
-xtab <- xtabs(~mounting+male+neutered, data=df)
+xtab <- xtabs(~male+neutered, data=df)
 print(xtab)
 ```
 
