@@ -317,27 +317,38 @@ old_par <- par(mfrow=c(2,2))
 plot(lm_fit)
 par(old_par)
 ```
+
 TODO: observations
+
+## Polynomial Regression
+
+```{r}
+plm_fit <- lm(p_attend~poly(age, 3), data=df_age)
+summary(plm_fit)
+
+old_par <- par(mfrow=c(2,2))
+plot(plm_fit)
+par(old_par)
+```
+
+The slight increase in explained variance from the polynomial model does not
+justify the significant increase in model complexity.
 
 ## Visualizing the Trend
 
-This seems like a trend that would convey well in a visualization. Factors plot
-poorly, so let's generate a simplified data frame that consists of two columns:
-(1) age in years and (2) the liklihood of puppy training attendance.
+Now that we have the age and probability of attendance in a data frame and have
+verified a significant fit, let's use it to create out visual.
 
 ```{r}
-age_prob_vector <- NULL
-max_age <- max(df$age_yrs)
-for (i in 1:max_age) {
-  df_tmp <- df %>%
-    filter(age_yrs == i) %>%
-    select(train_6mo_or_less)
-  p <- sum(df_tmp$train_6mo_or_less)/length(df_tmp$train_6mo_or_less)
-  age_prob_vector <- c(age_prob_vector, p)
-}
-
-df_age <- data.frame(age=c(1:max_age), attendance=age_prob_vector)
-head(df_age)
+df_age %>%
+  ggplot(aes(x=age, y=p_attend)) +
+  geom_point(col='cornflowerblue') +
+  stat_smooth(method='lm', col='cornflowerblue', fill='coral',
+              formula=y~poly(x, 1), alpha=.25) +
+  labs(x='Age (years)', y=expression('P'[attendance])) +
+  scale_y_continuous(labels=scales::percent) +
+  geom_point(x=outlier$age, y=outlier$p_attend, colour='red', shape=4) +
+  scale_x_continuous(breaks=seq(1, 20, by=2))
 ```
 
 
