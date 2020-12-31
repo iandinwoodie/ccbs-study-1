@@ -303,15 +303,19 @@ for (i in 1:max_age) {
   p_attend_vec <- c(p_attend_vec, p)
 }
 
-df_age <- data.frame(age=c(1:max_age), p_attend=age_prob_vector)
+df_age <- data.frame(age=c(1:max_age), p_attend=p_attend_vec)
 head(df_age)
 
-glm_fit <- glm(p_attend~age, data=df_age)
-summary(glm_fit)
+# Remove the outlier.
+outlier <- df_age[15,]
+df_age <- df_age[-c(15),]
 
-old_par <- par()
-par(mfrow=c(2,2))
-plot(glm_fit)
+lm_fit <- lm(p_attend~age, data=df_age)
+summary(lm_fit)
+
+old_par <- par(mfrow=c(2,2))
+plot(lm_fit)
+par(old_par)
 ```
 TODO: observations
 
