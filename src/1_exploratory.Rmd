@@ -113,6 +113,16 @@ looking at the graphs along the `train_6mo_or_less` row. Thankfully, we see that
 the distributions between the two groups for the plotted columns are roughly
 equivalent.
 
+Let's get a count of the number of dogs that were reported to have been trained
+with a reward-based program but were subject to a punishing restraining device.
+
+```{r}
+nrow(df %>%
+  select(train_technique, punish_device) %>%
+  drop_na() %>%
+  filter(train_technique == 'reward' & punish_device == TRUE))
+```
+
 ## Continuous Variables
 
 The age of the dog is the only continuous variable we are working with.
