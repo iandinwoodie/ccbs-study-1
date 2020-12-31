@@ -210,6 +210,16 @@ ggarrange(plotlist=plot_list, ncol=4, nrow=3)
 
 # Exploring Trends and Relationships
 
+## Sex and Neuter Status
+
+It's common to want to know the split of neuter status by sex, so let's generate
+those numbers now.
+
+```{r}
+xtab <- xtabs(~mounting+male+neutered, data=df)
+print(xtab)
+```
+
 ## Control vs Experimental Group
 
 Our control group consists of the dogs who did not attend puppy training and our
