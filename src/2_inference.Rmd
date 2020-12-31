@@ -312,6 +312,7 @@ df_age <- df_age[-c(15),]
 
 lm_fit <- lm(p_attend~age, data=df_age)
 summary(lm_fit)
+print(confint(lm_fit))
 
 old_par <- par(mfrow=c(2,2))
 plot(lm_fit)
@@ -325,6 +326,7 @@ TODO: observations
 ```{r}
 plm_fit <- lm(p_attend~poly(age, 3), data=df_age)
 summary(plm_fit)
+print(confint(plm_fit))
 
 old_par <- par(mfrow=c(2,2))
 plot(plm_fit)
