@@ -277,10 +277,43 @@ To answer this, we build a regression model where the predictor is the dog's age
 and the outcome is whether or not they attended puppy training.
 
 ```{r}
-glm_fit <- glm(train_6mo_or_less~age_yrs, data=df, family='binomial')
+pred <- 'age_yrs'
+outcome <- 'train_6mo_or_less'
+df_tmp <- df[,c(pred, outcome)]
+df_tmp <- apply_min_xtab(df_tmp, outcome)
+f <- as.formula(paste0(outcome, '~', '.'))
+glm_fit <- glm(f, data=df_tmp, family='binomial')
 summary(glm_fit)
 print(exp(cbind(OR=coef(glm_fit), suppressMessages(confint(glm_fit)))))
 ```
+
+## Linear Regression
+
+Factors plot poorly, so let's extract the probability of attendance for each age
+range and fit it with a linear regression model.
+
+```{r}
+p_attend_vec <- NULL
+max_age <- max(df$age_yrs)
+for (i in 1:max_age) {
+  df_tmp <- df %>%
+    filter(age_yrs == i) %>%
+    select(train_6mo_or_less)
+  p <- sum(df_tmp$train_6mo_or_less)/length(df_tmp$train_6mo_or_less)
+  p_attend_vec <- c(p_attend_vec, p)
+}
+
+df_age <- data.frame(age=c(1:max_age), p_attend=age_prob_vector)
+head(df_age)
+
+glm_fit <- glm(p_attend~age, data=df_age)
+summary(glm_fit)
+
+old_par <- par()
+par(mfrow=c(2,2))
+plot(glm_fit)
+```
+TODO: observations
 
 ## Visualizing the Trend
 
