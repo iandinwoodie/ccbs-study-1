@@ -262,7 +262,9 @@ for (outcome in outcomes) {
 }
 ```
 
-## Trends in Training Attendance
+# Trends in Dog Age
+
+## Impact of Age on Training Attendance
 
 In our exploratory data analysis we saw a trend that seemed to indicate that
 younger dogs were more likely to have attended puppy training than older dogs.
@@ -271,7 +273,7 @@ popular over time. To start, we introduce the question to be answered:
 
 - Were younger dogs more likely to attend more sessions?
 
-## Binomial Logistic Regression
+### Binomial Logistic Regression
 
 To answer this, we build a regression model where the predictor is the dog's age
 and the outcome is whether or not they attended puppy training.
@@ -287,7 +289,7 @@ summary(glm_fit)
 print(exp(cbind(OR=coef(glm_fit), suppressMessages(confint(glm_fit)))))
 ```
 
-## Linear Regression
+### Linear Regression
 
 Factors plot poorly, so let's extract the probability of attendance for each age
 range and fit it with a linear regression model.
@@ -321,7 +323,7 @@ par(old_par)
 
 TODO: observations
 
-## Polynomial Regression
+### Polynomial Regression
 
 ```{r}
 plm_fit <- lm(p_attend~poly(age, 3), data=df_age)
@@ -336,7 +338,7 @@ par(old_par)
 The slight increase in explained variance from the polynomial model does not
 justify the significant increase in model complexity.
 
-## Visualizing the Trend
+### Visualizing the Trend
 
 Now that we have the age and probability of attendance in a data frame and have
 verified a significant fit, let's use it to create out visual.
