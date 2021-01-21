@@ -377,3 +377,18 @@ df_p_jump <- data.frame(age=c(1:max_age), p_jump=p_jump_vec)
 head(df_p_jump)
 ```
 
+Now we create a visualization for this trend.
+
+```{r}
+df_p_jump %>%
+  ggplot(aes(x=age, y=p_jump)) +
+  geom_point(col='cornflowerblue') +
+  stat_smooth(method='lm', col='cornflowerblue', fill='coral',
+              formula=y~poly(x, 1), alpha=.25) +
+  labs(x='Age (years)', y=expression('P'[jumping])) +
+  scale_y_continuous(labels=scales::percent) +
+  geom_point(x=outlier$age, y=outlier$p_attend, colour='red', shape=4) +
+  scale_x_continuous(breaks=seq(1, 20, by=2)) +
+  ggtitle('Probability of Problematic Jumping versus Age in Years') +
+  theme(plot.title=element_text(hjust = 0.5))
+```
