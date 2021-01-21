@@ -357,4 +357,23 @@ df_age %>%
   theme(plot.title=element_text(hjust = 0.5))
 ```
 
+## Impact of Age on Problematic Jumping
+
+We saw in our inferential analysis that increased age was correlated with a
+decreated probability for jumping up. We want to visualize this trend, so let's
+create a data frame with the probability of jumping up for each year of age.
+
+```{r}
+p_jump_vec <- NULL
+for (i in 1:max_age) {
+  df_tmp <- df %>%
+    filter(age_yrs == i) %>%
+    select(jumping)
+  p <- sum(df_tmp$jumping)/length(df_tmp$jumping)
+  p_jump_vec <- c(p_jump_vec, p)
+}
+
+df_p_jump <- data.frame(age=c(1:max_age), p_jump=p_jump_vec)
+head(df_p_jump)
+```
 
