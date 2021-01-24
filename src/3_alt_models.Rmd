@@ -1,0 +1,99 @@
+---
+title: "Investigating Alternate Models"
+author: "Ian Dinwoodie"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(car)
+knitr::opts_chunk$set(echo=TRUE)
+```
+
+# Workspace Setup
+
+## Loading the Data
+
+Load the raw data and verify its dimensions and structure.
+
+```{r}
+df <- readRDS('../data/tidy.Rds')
+dim(df)
+summary(df)
+```
+
+## Preparing Common Variables and Functions
+
+```{r}
+outcomes <- c(
+  'aggression',
+  'fear_anxiety',
+  'jumping',
+  'barking',
+  'coprophagia',
+  'compulsion',
+  'house_soiling',
+  'rep_materials',
+  'hyperactive',
+  'destructive',
+  'escape',
+  'mounting'
+)
+outcomes <- sort(outcomes)
+```
+
+```{r}
+apply_min_xtab <- function(df, outcome, cutoff=10)
+{
+  drops <- NULL
+  for (col in names(df)) {
+    if (col == outcome) next
+    if (is.integer(df[,col])) next
+    
+    xtab <- table(df[,col], df[,outcome])
+    if (min(xtab) < cutoff) {
+      drops <- c(drops, col)
+      break
+    }
+  }
+  
+  if (length(drops) > 0) {
+    cat('\nDropped from model due to insufficient responses:\n')
+    cat(drops)
+    cat('\n')
+  }
+  
+  return(df[, !(names(df) %in% drops)])
+}
+```
+
+```{r}
+df_exp <- df %>%
+  filter(train_6mo_or_less == TRUE)
+summary(df_exp)
+```
+
+# Alternate Models
+
+## Exploring Training Methods and Equipment
+
+With regard to training methods, the following question was presented to
+participants.
+
+> At puppy training classes, what training techniques were used?
+> - Rewarding techniques (e.g., treats, praise, pets)
+> - Tough love techniques (e.g., yelling, bopping on the nose, swatting on the rump, alpha rolls (pinning on back until dog submits), use of aversive collars (e.g., shock, prong, choke), jerking on the leash, water spraying, scruffing)
+> - A combination of rewarding and tough love techniques
+
+However, after discussing with clinicians, the unanimous decision was that all
+training methods that involved some form of punishment could be considered
+punishment-based. This modification can be seen in the first notebook for this
+study (`0_tidy.Rmd`) and the result can be seen by looking at the
+`train_technique` column.
+
+```{r}
+summary(df_exp$train_technique)
+```
+
+
