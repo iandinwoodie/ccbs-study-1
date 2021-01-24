@@ -264,3 +264,14 @@ for (outcome in outcomes) {
   cat('\n')
 }
 ```
+
+# Discussion
+
+In brief, I don't think there is any benefit at looking at the non-punishing
+devices. Those devices are staples in the average canine household. We are more
+concerned with the effect of the punishing devices. I also believe that the
+training method and devices should stay separate to avoid over simplifying the
+model and the associated risk of warping the meaning of the collected data.
+
+For these reasons, I believe the second model whihc looks only at the punishing
+devices, is the most logical fit for this data set.
