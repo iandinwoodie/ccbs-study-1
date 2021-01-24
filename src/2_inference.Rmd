@@ -206,7 +206,7 @@ We will need to expand the independent variables used for the model to answer
 these questions.
 
 ```{r}
-df <- df %>%
+df_exp <- df_exp %>%
   mutate(reward = ifelse(
     is.na(train_technique), NA, ifelse(
       train_technique == 'reward', TRUE, FALSE)))
@@ -245,7 +245,7 @@ for (outcome in outcomes) {
   cat(paste0('\n', outcome, '\n'))
   f <- as.formula(paste0(outcome, '~', '.'))
   
-  df_tmp <- df[,c(outcome, glm_attribs)]
+  df_tmp <- df_exp[,c(outcome, glm_attribs)]
   df_tmp <- apply_min_xtab(df_tmp, outcome)
   
   # If necessary, drop columns due to separability problems.
