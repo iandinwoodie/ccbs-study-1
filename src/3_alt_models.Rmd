@@ -142,10 +142,9 @@ none.
 
 ```{r}
 df_exp <- df_exp %>%
-  mutate(device_group = as.factor(ifelse(
-    punish_device == TRUE, 'punish', ifelse(
-      buckle_collar == TRUE | harness == TRUE | head_halter == TRUE,
-      "non_punish", "none"))))
+  mutate(device_group <- as.factor(ifelse(
+    device_used == FALSE, 'none', ifelse(
+      punish_device == TRUE, 'punish', 'non_punish'))))
 
 summary(df_exp$device_group)
 ```
