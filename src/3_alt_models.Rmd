@@ -155,24 +155,20 @@ df_exp <- df_exp %>%
     is.na(train_technique), NA, ifelse(
       train_technique == 'reward', TRUE, FALSE)))
 
-training_params <- c(
-  'train_1_3_mo',
-  'train_4_mo',
-  'train_5_6_mo',
-  'reward',
-  'train_class_count'
-)
-
-dog_params <- c(
+common_params <- c(
   'age_yrs',
   'male',
   'neutered',
-  'acq_12_wo_or_less'
+  'acq_12_wo_or_less',
+  'train_1_3_mo',
+  'train_4_mo',
+  'train_5_6_mo',
+  'train_class_count'
 )
 
 glm_attribs <- c(
-  dog_params,
-  training_params,
+  common_params,
+  'reward',
   'device_group'
 )
 
@@ -208,11 +204,49 @@ if punishing devices were used and what their impacts were.
 
 ```{r}
 glm_attribs <- c(
-  dog_params,
-  training_params,
+  common_params,
+  'reward',
   'punish_device'
 )
 
+set.seed(1)
+for (outcome in outcomes) {
+  cat(paste(replicate(80, '-'), collapse=''))
+  cat(paste0('\n', outcome, '\n'))
+  f <- as.formula(paste0(outcome, '~', '.'))
+  
+  df_tmp <- df_exp[,c(outcome, glm_attribs)]
+  df_tmp <- apply_min_xtab(df_tmp, outcome)
+  
+  glm_fit <- glm(f, data=df_tmp, family='binomial')
+  print(summary(glm_fit))
+  print(exp(cbind(OR=coef(glm_fit), suppressMessages(confint(glm_fit)))))
+  cat('\nVIF:\n')
+  print(car::vif(glm_fit))
+  cat('\n')
+}
+```
+
+### Combining Training Methods and Devices
+
+For sake of completeness, let's also consider a simplified model where the use
+of any punishing devices indicates the use of punishment training methods. The
+`adj_train_technique` columns exists to represent this.
+
+```{r}
+df_exp <- df_exp %>%
+  mutate(adj_reward = ifelse(reward == TRUE, TRUE, FALSE))
+summary(df_exp$adj_reward)
+
+glm_attribs <- c(
+  common_params,
+  'adj_reward'
+)
+```
+
+Now let's build the models.
+
+```{r}
 set.seed(1)
 for (outcome in outcomes) {
   cat(paste(replicate(80, '-'), collapse=''))
