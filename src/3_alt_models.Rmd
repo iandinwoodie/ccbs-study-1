@@ -133,3 +133,19 @@ initial notebook.
 summary(df_exp$punish_device)
 ```
 
+### Analysis of Grouped Devices
+
+The `punish_device` variable is not enough for our "grouped" analysis since it
+does not account for dogs being exposed to no devices. Therefore, we create a
+device group (`device_group`) column with three values: punish, non-punish,
+none.
+
+```{r}
+df_exp <- df_exp %>%
+  mutate(device_group = as.factor(ifelse(
+    punish_device == TRUE, 'punish', ifelse(
+      buckle_collar == TRUE | harness == TRUE | head_halter == TRUE,
+      "non_punish", "none"))))
+
+summary(df_exp$device_group)
+```
