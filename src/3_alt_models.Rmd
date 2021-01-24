@@ -96,4 +96,40 @@ study (`0_tidy.Rmd`) and the result can be seen by looking at the
 summary(df_exp$train_technique)
 ```
 
+In addition, we also presented the following questions to participants:
+
+> What restraining/training devices were employed?
+> - Nylon slip collar
+> - Buckle collar
+> - Head halter (with nose band)
+> - Harness (around chest)
+> - Metal "choke" collar
+> - Prong collar
+> - Martingale collar
+> - Electric shock collar
+> - No devices were employed
+
+We exclude the "Other" response from the list above for simplicity since the
+only actionable submissions were for harnesses. The harness count was updated
+accordingly.
+
+These devices generally fall into two caregories: punishing and non-punishing.
+
+> Punishing:
+> - Metal "choke" collar
+> - Prong collar
+> - Martingale collar
+> - Electric shock collar
+> - Nylon slip collar
+> Non-punishing:
+> - Buckle collar
+> - Head halter (with nose band)
+> - Harness (around chest)
+
+We calculated the number of dogs exposed to these punishing devices in our
+initial notebook.
+
+```{r}
+summary(df_exp$punish_device)
+```
 
