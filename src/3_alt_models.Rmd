@@ -142,9 +142,61 @@ none.
 
 ```{r}
 df_exp <- df_exp %>%
-  mutate(device_group <- as.factor(ifelse(
+  mutate(device_group = as.factor(ifelse(
     device_used == FALSE, 'none', ifelse(
       punish_device == TRUE, 'punish', 'non_punish'))))
 
 summary(df_exp$device_group)
 ```
+
+```{r}
+df_exp <- df_exp %>%
+  mutate(reward = ifelse(
+    is.na(train_technique), NA, ifelse(
+      train_technique == 'reward', TRUE, FALSE)))
+
+training_params <- c(
+  'train_1_3_mo',
+  'train_4_mo',
+  'train_5_6_mo',
+  'reward',
+  'train_class_count'
+)
+
+dog_params <- c(
+  'age_yrs',
+  'male',
+  'neutered',
+  'acq_12_wo_or_less'
+)
+
+glm_attribs <- c(
+  dog_params,
+  training_params,
+  'device_group'
+)
+
+print(glm_attribs)
+```
+
+```{r}
+for (outcome in outcomes) {
+  cat(paste(replicate(80, '-'), collapse=''))
+  cat(paste0('\n', outcome, '\n'))
+  f <- as.formula(paste0(outcome, '~', '.'))
+  
+  df_tmp <- df_exp[,c(outcome, glm_attribs)]
+  df_tmp <- apply_min_xtab(df_tmp, outcome)
+  
+  glm_fit <- glm(f, data=df_tmp, family='binomial')
+  print(summary(glm_fit))
+  print(exp(cbind(OR=coef(glm_fit), suppressMessages(confint(glm_fit)))))
+  cat('\nVIF:\n')
+  print(car::vif(glm_fit))
+  cat('\n')
+}
+```
+
+### Considering only Punishing Devices
+
+
