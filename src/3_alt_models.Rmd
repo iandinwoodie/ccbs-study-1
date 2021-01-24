@@ -180,6 +180,7 @@ print(glm_attribs)
 ```
 
 ```{r}
+set.seed(1)
 for (outcome in outcomes) {
   cat(paste(replicate(80, '-'), collapse=''))
   cat(paste0('\n', outcome, '\n'))
@@ -199,4 +200,33 @@ for (outcome in outcomes) {
 
 ### Considering only Punishing Devices
 
+However, since harnesses, buckle collars, and head halters are neither
+punishment nor reward is it worth looking at this "non-punishment" device group?
+We don't expect any of these devices to "help" and that is confirmed above. By
+including them we are just diluting our models. Instead, we just want to know
+if punishing devices were used and what their impacts were.
 
+```{r}
+glm_attribs <- c(
+  dog_params,
+  training_params,
+  'punish_device'
+)
+
+set.seed(1)
+for (outcome in outcomes) {
+  cat(paste(replicate(80, '-'), collapse=''))
+  cat(paste0('\n', outcome, '\n'))
+  f <- as.formula(paste0(outcome, '~', '.'))
+  
+  df_tmp <- df_exp[,c(outcome, glm_attribs)]
+  df_tmp <- apply_min_xtab(df_tmp, outcome)
+  
+  glm_fit <- glm(f, data=df_tmp, family='binomial')
+  print(summary(glm_fit))
+  print(exp(cbind(OR=coef(glm_fit), suppressMessages(confint(glm_fit)))))
+  cat('\nVIF:\n')
+  print(car::vif(glm_fit))
+  cat('\n')
+}
+```
